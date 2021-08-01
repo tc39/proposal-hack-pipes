@@ -695,7 +695,7 @@ try {
    |> tryer.apply(this, %);
 } catch (e) {
   return arguments
-   |> _concat([e], arguments)
+   |> _concat([e], %)
    |> catcher.apply(this, %);
 }
 ```

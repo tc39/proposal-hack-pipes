@@ -974,8 +974,8 @@ rather than Hack pipes, but this could be changed.
 |`x \|> f(?, 0)`             |`x \|> f(%, 0)`             |
 |`a.map(x=> x + 1)`          |`a.map(x=> x + 1)`          |
 |`a.map(f(?, 0))`            |`a.map(x=> f(x, 0))`        |
-|`a.map(x=> x + x)`          |`a.map(x=> % + %)`          |
-|`a.map(x=> f(x, x))`        |`a.map(x=> f(%, %)`         |
+|`a.map(x=> x + x)`          |`a.map(x=> x + x)`          |
+|`a.map(x=> f(x, x))`        |`a.map(x=> f(x, x)`         |
 |`a.sort((x,y)=> x - y)`     |`a.sort((x,y)=> x - y)`     |
 |`a.sort(f(?, ?, 0))`        |`a.sort((x,y)=> f(x, y, 0))`|
 
@@ -1001,6 +1001,8 @@ in order to be syntactically valid.
 | ---------------------------| -------------------------- |
 |`a.map(x=> x + 1)`          |`a.map(+> % + 1)`           |
 |`a.map(f(?, 0))`            |`a.map(+> f(%, 0))`         |
+|`a.map(x=> x + x)`          |`a.map(+> % + %)`           |
+|`a.map(x=> f(x, x))`        |`a.map(+> f(%, %)`          |
 |`a.sort((x,y)=> x - y)`     |`a.sort(+> %0 - %1)`        |
 |`a.sort(f(?, ?, 0))`        |`a.sort(+> f(%0, %1, 0))`   |
 

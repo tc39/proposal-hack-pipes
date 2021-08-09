@@ -130,7 +130,7 @@ The pipe operator attempts to marry the **convenience** and ease of **method cha
 with the wide **applicability** of **expression nesting**.
 
 The general structure of all the pipe operators is
-`value |> ` <var>e1</var> `|>` <var>e2</var> `|>` <var>e3</var>,
+`value |>` <var>e1</var> `|>` <var>e2</var> `|>` <var>e3</var>,
 where <var>e1</var>, <var>e2</var>, e3 <var>three</var>
 are all expressions that take consecutive values as their parameters.
 The `|>` operator then does some degree of magic to “pipe” `value`

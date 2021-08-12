@@ -827,7 +827,7 @@ contributors: J. S. Choi
         ConditionalExpression[?In, ?Yield, ?Await] `|&gt;` PipeBody[?In, ?Yield, ?Await]
 
       PipeBody[In, Yield, Await] :
-        PipeExpression[?In, ?Yield, ?Await]
+        AssignmentExpression[?In, ?Yield, ?Await]
     </emu-grammar>
 
     <emu-clause id=sec-pipe-operator-static-semantics-early-errors>
@@ -839,6 +839,11 @@ contributors: J. S. Choi
         topic reference. This choice of token is not a final decision; `&percnt;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
+
+      <emu-grammar>PipeBody : PipeExpression</emu-grammar>
+      <emu-alg>
+        1. It is a Syntax Error if |PipeBody| Contains `&percnt;` is *false*.
+      </emu-alg>
 
       <emu-note>
         <p>A |PipeBody| must use its topic at least once.
@@ -856,8 +861,16 @@ contributors: J. S. Choi
 
       <emu-grammar>PipeBody : PipeExpression</emu-grammar>
       <emu-alg>
-        1. It is a Syntax Error if |PipeBody| Contains `&percnt;` is *false*.
+        1. It is a Syntax Error if |YieldExpression| is covering |PipeBody|.
       </emu-alg>
+
+      <emu-note>
+        <p>A |PipeBody| must not be a |YieldExpression| without parentheses.
+        This is to prevent the confusing expression from being valid:
+        `x |> yield % |> % + 1`.
+        This expression would otherwise be unexpectedly equivalent to
+        `x |> (yield % |> f(%)).`</p>
+      </emu-note>
     </emu-clause>
 
     <emu-clause id=sec-pipe-operator-runtime-semantics-evaluation>

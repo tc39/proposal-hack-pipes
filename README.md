@@ -477,12 +477,13 @@ then evaluates its righthand side (the **pipe body**) with that binding.
 The resulting value of the righthand side
 becomes the whole pipe expression’s final value (the **pipe output**).
 
-The pipe operator’s [precedence][] is **looser**
-than all operators **other than**:
+The pipe operator’s [precedence][] is the **same** as:
 * the function arrow `=>`;
 * the assignment operators `=`, `+=`, etc.;
 * the generator operators `yield` and `yield *`;
-* and the comma operator `,`.
+
+It is **tighter** than only the comma operator `,`.\
+It is **looser** than **all other** operators.
 
 For example, `v => v |> % == null |> foo(%, 0)`\
 would group into `v => (v |> (% == null) |> foo(%, 0))`,\
@@ -498,6 +499,14 @@ is almost certainly an **accidental** programmer error.
 Likewise, a topic reference **must** be contained in a pipe body.
 Using a topic reference outside of a pipe body
 is also **invalid syntax**.
+
+Because `yield` is a very loose operator,
+a **`yield`** expression acting as a pipe’s body **must have parentheses**.
+This is to prevent `v |> yield % |> % + 1` from being valid,
+which would confusingly parse as `v |> (yield % |> % + 1)`.
+(However, other expressions such as assignment and arrow functions
+are valid pipe bodies. Note that they, too, group with right associativity,
+so `v |> x => y |> z` is `v |> (x => y |> z`).)
 
 Lastly, topic bindings **inside dynamically compiled** code
 (e.g., with `eval` or `new Function`)

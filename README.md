@@ -60,13 +60,11 @@ console.log(
   chalk.dim(
     `$ ${Object.keys(envars)
       .map(envar =>
-        `${envar}=${envars[envar]}`,
-      ).join(' ')
+        `${envar}=${envars[envar]}`)
+      .join(' ')
     }`,
     'node',
-    args.join(' '),
-  )
-);
+    args.join(' ')));
 ```
 
 This real-world code is made of **deeply nested expressions**.
@@ -146,13 +144,11 @@ console.log(
   chalk.dim(
     `$ ${Object.keys(envars)
       .map(envar =>
-        `${envar}=${envars[envar]}`,
-      ).join(' ')
+        `${envar}=${envars[envar]}`)
+      .join(' ')
     }`,
     'node',
-    args.join(' '),
-  )
-);
+    args.join(' ')));
 ```
 
 …we can **untangle** it as such using a pipe operator
@@ -162,8 +158,7 @@ and a placeholder token (`%`) standing in for the previous operation’s value:
 envars
 |> Object.keys(%)
 |> %.map(envar =>
-    `${envar}=${envars[envar]}`,
-  )
+  `${envar}=${envars[envar]}`)
 |> %.join(' ')
 |> `$ ${%}`
 |> chalk.dim(%, 'node', args.join(' '))
@@ -194,8 +189,7 @@ For example, using our previous modified
 envars
 |> Object.keys(%)
 |> %.map(envar =>
-    `${envar}=${envars[envar]}`,
-  )
+  `${envar}=${envars[envar]}`)
 |> %.join(' ')
 |> `$ ${%}`
 |> chalk.dim(%, 'node', args.join(' '))
@@ -207,8 +201,7 @@ envars
 ```js
 const envarKeys = Object.keys(envars)
 const envarPairs = envarKeys.map(envar =>
-  `${envar}=${envars[envar]}`,
-);
+  `${envar}=${envars[envar]}`);
 const envarString = envarPairs.join(' ');
 const consoleText = `$ ${envarString}`;
 const coloredConsoleText = chalk.dim(consoleText, 'node', args.join(' '));
@@ -312,8 +305,7 @@ For example, using our previous modified
 envars
 |> Object.keys(%)
 |> %.map(envar =>
-    `${envar}=${envars[envar]}`,
-  )
+  `${envar}=${envars[envar]}`)
 |> %.join(' ')
 |> `$ ${%}`
 |> chalk.dim(%, 'node', args.join(' '))
@@ -326,8 +318,7 @@ envars
 envars
 |> Object.keys
 |> x=> x.map(envar =>
-    `${envar}=${envars[envar]}`,
-  )
+  `${envar}=${envars[envar]}`)
 |> x=> x.join(' ')
 |> x=> `$ ${x}`
 |> x=> chalk.dim(x, 'node', args.join(' '))
@@ -544,8 +535,7 @@ Only minor formatting changes have been made to the status-quo examples.
 ```js
 return equals(
   take(prefix.length, list),
-  prefix,
-);
+  prefix);
 ```
 From [ramda.js][].
 
@@ -563,9 +553,7 @@ return list
 ```js
 var minLoc = Object.keys(
   grunt.config(
-    'uglify.all.files',
-  )
-)[0];
+    'uglify.all.files'))[0];
 ```
 From [jquery/build/tasks/sourceMap.js][].
 
@@ -584,8 +572,7 @@ var minLoc = 'uglify.all.files'
 const json =
   await npmFetch.json(
     npa(pkgs[0]).escapedName,
-    opts,
-  );
+    opts);
 ```
 From [node/deps/npm/lib/unpublish.js][].
 
@@ -624,8 +611,7 @@ function listCacheHas (key) {
 ```js
 return _.filter(obj,
   _.negate(cb(pred)),
-  context,
-);
+  context);
 ```
 From [underscore.js][].
 
@@ -643,11 +629,9 @@ return pred
 
 ```js
 parsed = buildFragment(
-  [ data ], context, scripts,
-);
+  [ data ], context, scripts);
 return jQuery.merge(
-  [], parsed.childNodes,
-);
+  [], parsed.childNodes);
 ```
 From [jquery/src/core/parseHTML.js][].
 
@@ -667,9 +651,7 @@ return data
 return xf['@@transducer/result'](
   obj[methodName](
     bind(xf['@@transducer/step'], xf),
-    acc,
-  ),
-);
+    acc));
 ```
 From [ramda.js][].
 
@@ -690,8 +672,7 @@ try {
   return tryer.apply(this, arguments);
 } catch (e) {
   return catcher.apply(this,
-    _concat([e], arguments),
-  );
+    _concat([e], arguments));
 }
 ```
 From [ramda.js][].
@@ -715,10 +696,9 @@ try {
 ```js
 const entries =
   Object.entries(
-    require('shared/ReactSymbols'),
-  ).filter(([key]) =>
-    key !== 'REACT_ASYNC_MODE_TYPE',
-  );
+    require('shared/ReactSymbols'))
+    .filter(([key]) =>
+      key !== 'REACT_ASYNC_MODE_TYPE');
 expectToBeUnique(entries);
 ```
 From [react/scripts/jest/jest-cli.js][].
@@ -729,8 +709,7 @@ From [react/scripts/jest/jest-cli.js][].
 require('shared/ReactSymbols')
 |> Object.entries(%)
 |> %.filter(([key]) =>
-    key !== 'REACT_ASYNC_MODE_TYPE',
-  )
+  key !== 'REACT_ASYNC_MODE_TYPE')
 |> expectToBeUnique(%);
 ```
 
@@ -745,8 +724,7 @@ return this.set('Link',
       return '<' + links[rel] + '>; rel="'
         + rel + '"';
     })
-    .join(', '),
-);
+    .join(', '));
 ```
 From [express/lib/response.js][].
 
@@ -771,13 +749,11 @@ console.log(
   chalk.dim(
     `$ ${Object.keys(envars)
       .map(envar =>
-        `${envar}=${envars[envar]}`,
-      ).join(' ')
+        `${envar}=${envars[envar]}`)
+      .join(' ')
     }`,
     'node',
-    args.join(' '),
-  )
-);
+    args.join(' ')));
 ```
 From [react/scripts/jest/jest-cli.js][].
 
@@ -787,8 +763,7 @@ From [react/scripts/jest/jest-cli.js][].
 envars
 |> Object.keys(%)
 |> %.map(envar =>
-    `${envar}=${envars[envar]}`,
-  )
+    `${envar}=${envars[envar]}`)
 |> %.join(' ')
 |> `$ ${%}`
 |> chalk.dim(%, 'node', args.join(' '))
@@ -813,8 +788,8 @@ From [jquery/src/core/init.js][].
 match
 |> context[%]
 |> isFunction(this[match])
+  ? this[match](%);
   : this.attr(match, %);
-  ? this[match](%)
 ```
 
 <tr>
@@ -843,10 +818,8 @@ return _reduce(
   xf(
     typeof fn === 'function'
     ? _xwrap(fn)
-    : fn,
-  ),
-  acc, list,
-);
+    : fn),
+  acc, list);
 ```
 From [ramda.js][].
 
@@ -893,9 +866,7 @@ jQuery.merge(
     context && context.nodeType
       ? context.ownerDocument || context
       : document,
-    true,
-  )
-);
+    true));
 ```
 From [jquery/src/core/init.js][].
 

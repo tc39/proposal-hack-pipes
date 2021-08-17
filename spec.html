@@ -877,11 +877,11 @@ contributors: J. S. Choi
         <p>This is to prevent confusing expressions from being valid, such as
         `x |> yield % |> % + 1`.<br>
         That expression would otherwise be unexpectedly equivalent to
-        `x |> (yield % |> f(%)).`<br>
+        `x |> (yield % |> % + 1)`.<br>
         Likewise, the confusing expression
-        `x |> y ? % : z |> f(%)`.<br>
+        `x |> y ? % : z |> % + 1`.<br>
         would otherwise be unexpectedly equivalent to
-        `x |> (y ? % : z |> f(%)).`</p>
+        `x |> (y ? % : z |> % + 1)`.</p>
         <p>Such invalid expressions would become valid with explicit parentheses.</p>
       </emu-note>
     </emu-clause>

@@ -841,9 +841,9 @@ return fn
 
 ```js
 if (obj == null) return 0;
-return (isArrayLike(obj)
+return isArrayLike(obj)
   ? obj.length
-  : _.keys(obj).length);
+  : _.keys(obj).length;
 ```
 From [underscore.js][].
 

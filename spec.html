@@ -65,7 +65,7 @@ contributors: J. S. Choi
           </ins>
 
         <ins>PipeExpression :
-          ConditionalExpression `|&gt;` PipeBody</ins>
+          ShortCircuitExpression `|&gt;` PipeBody</ins>
       </emu-grammar>
       <emu-alg>
         1. Return *false*.
@@ -224,7 +224,7 @@ contributors: J. S. Choi
           </ins>
 
         <ins>PipeExpression :
-          ConditionalExpression `|&gt;` PipeBody</ins>
+          ShortCircuitExpression `|&gt;` PipeBody</ins>
       </emu-grammar>
       <emu-alg>
         1. Return ~invalid~.
@@ -823,8 +823,7 @@ contributors: J. S. Choi
     <h2>Syntax</h2>
     <emu-grammar type=definition>
       PipeExpression[In, Yield, Await] :
-        ConditionalExpression[?In, ?Yield, ?Await]
-        ConditionalExpression[?In, ?Yield, ?Await] `|&gt;` PipeBody[?In, ?Yield, ?Await]
+        ShortCircuitExpression[?In, ?Yield, ?Await] `|&gt;` PipeBody[?In, ?Yield, ?Await]
 
       PipeBody[In, Yield, Await] :
         AssignmentExpression[?In, ?Yield, ?Await]
@@ -861,15 +860,29 @@ contributors: J. S. Choi
 
       <emu-grammar>PipeBody : PipeExpression</emu-grammar>
       <emu-alg>
-        1. It is a Syntax Error if |YieldExpression| is covering |PipeBody|.
+        1. It is a Syntax Error if one of the following productions is covering |PipeBody|:
+            * |ConditionalExpression|
+            * |YieldExpression|
+            * |ArrowFunction|
+            * |AsyncArrowFunction|
+            * |LeftHandSideExpression| `=` |AssignmentExpression|
+            * |LeftHandSideExpression| |AssignmentOperator| |AssignmentExpression|
+            * |LeftHandSideExpression| `&&=` |AssignmentExpression|
+            * |LeftHandSideExpression| `||=` |AssignmentExpression|
+            * |LeftHandSideExpression| `??=` |AssignmentExpression|
       </emu-alg>
 
       <emu-note>
-        <p>A |PipeBody| must not be a |YieldExpression| without parentheses.
-        This is to prevent the confusing expression from being valid:
-        `x |> yield % |> % + 1`.
-        This expression would otherwise be unexpectedly equivalent to
-        `x |> (yield % |> f(%)).`</p>
+        <p>A |PipeBody| must not be an expression without parentheses that is formed from any other operator with identical precedence, such as |YieldExpression| or |ArrowFunction|.</p>
+        <p>This is to prevent confusing expressions from being valid, such as
+        `x |> yield % |> % + 1`.<br>
+        That expression would otherwise be unexpectedly equivalent to
+        `x |> (yield % |> f(%)).`<br>
+        Likewise, the confusing expression
+        `x |> y ? % : z |> f(%)`.<br>
+        would otherwise be unexpectedly equivalent to
+        `x |> (y ? % : z |> f(%)).`</p>
+        <p>Such invalid expressions would become valid with explicit parentheses.</p>
       </emu-note>
     </emu-clause>
 
@@ -898,9 +911,9 @@ contributors: J. S. Choi
     <h2>Syntax</h2>
     <emu-grammar>
       AssignmentExpression[In, Yield, Await] :
-        <del>ConditionalExpression[?In, ?Yield, ?Await]</del>
-        <ins>PipeExpression[?In, ?Yield, ?Await]</ins>
+        ConditionalExpression[?In, ?Yield, ?Await]
         [+Yield] YieldExpression[?In, ?Await]
+        <ins>PipeExpression[?In, ?Yield, ?Await]</ins>
         ArrowFunction[?In, ?Yield, ?Await]
         AsyncArrowFunction[?In, ?Yield, ?Await]
         LeftHandSideExpression[?Yield, ?Await] `=` AssignmentExpression[?In, ?Yield, ?Await]

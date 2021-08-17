@@ -491,13 +491,15 @@ Likewise, a topic reference **must** be contained in a pipe body.
 Using a topic reference outside of a pipe body
 is also **invalid syntax**.
 
-Because `yield` is a very loose operator,
-a **`yield`** expression acting as a pipe’s body **must have parentheses**.
-This is to prevent `v |> yield % |> % + 1` from being valid,
-which would confusingly parse as `v |> (yield % |> % + 1)`.
-(However, other expressions such as assignment and arrow functions
-are valid pipe bodies. Note that they, too, group with right associativity,
-so `v |> x => y |> z` is `v |> (x => y |> z`).)
+To prevent confusing grouping,
+it is **invalid** syntax to use **other** operators that have the **same precedence**
+(the function arrow `=>`, the assignment operators, and the yield operators)
+as a **pipe head or body**.
+When using, we must use **parentheses**
+to explicitly indicate which precedence is correct.
+For example, `a |> b ? % : c |> %.d` is invalid syntax;
+it should be corrected to either `a |> (b ? % : c) |> %.d`
+or `a |> (b ? % : c |> %.d)`.
 
 Lastly, topic bindings **inside dynamically compiled** code
 (e.g., with `eval` or `new Function`)
@@ -787,9 +789,9 @@ From [jquery/src/core/init.js][].
 ```js
 match
 |> context[%]
-|> isFunction(this[match])
+|> (isFunction(this[match])
   ? this[match](%);
-  : this.attr(match, %);
+  : this.attr(match, %));
 ```
 
 <tr>
@@ -807,7 +809,7 @@ From [underscore.js][].
 ```js
 return self
 |> srcFn.apply(%, args)
-|> _.isObject(%) ? % : self;
+|> (_.isObject(%) ? % : self);
 ```
 
 <tr>
@@ -827,9 +829,9 @@ From [ramda.js][].
 
 ```js
 return fn
-|> typeof % === 'function'
+|> (typeof % === 'function'
   ? _xwrap(%)
-  : %
+  : %)
 |> xf(%)
 |> _reduce(%, acc, list);
 ```
@@ -839,9 +841,9 @@ return fn
 
 ```js
 if (obj == null) return 0;
-return isArrayLike(obj)
+return (isArrayLike(obj)
   ? obj.length
-  : _.keys(obj).length;
+  : _.keys(obj).length);
 ```
 From [underscore.js][].
 
@@ -849,11 +851,11 @@ From [underscore.js][].
 
 ```js
 return obj
-|> % == null
-    ? 0
-    : isArrayLike(%)
-    ? %.length
-    : _.keys(%).length;
+|> (% == null
+  ? 0
+  : isArrayLike(%)
+  ? %.length
+  : _.keys(%).length);
 ```
 
 <tr>
@@ -874,9 +876,9 @@ From [jquery/src/core/init.js][].
 
 ```js
 context
-|> % && %.nodeType
+|> (% && %.nodeType
   ? %.ownerDocument || %
-  : document
+  : document)
 |> jQuery.parseHTML(match[1], %, true)
 |> jQuery.merge(%);
 ```
@@ -899,11 +901,11 @@ From [jquery/src/core/init.js][].
 
 ```js
 return context
-|> !% || %.jquery
+|> (!% || %.jquery
   // Handle $(expr, $(...))
   ? % || root
   // Handle $(expr, context)
-  : this.constructor(%)
+  : this.constructor(%))
 |> %.find(selector);
 ```
 

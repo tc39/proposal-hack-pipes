@@ -813,8 +813,8 @@ From [jquery/src/core/init.js][].
 match
 |> context[%]
 |> isFunction(this[match])
-  ? this[match](%);
   : this.attr(match, %);
+  ? this[match](%)
 ```
 
 <tr>

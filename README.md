@@ -160,14 +160,14 @@ and a placeholder token (`%`) standing in for the previous operation’s value:
 
 ```js
 envars
- |> Object.keys(%)
- |> %.map(envar =>
+|> Object.keys(%)
+|> %.map(envar =>
     `${envar}=${envars[envar]}`,
   )
- |> %.join(' ')
- |> `$ ${%}`
- |> chalk.dim(%, 'node', args.join(' '))
- |> console.log(%);
+|> %.join(' ')
+|> `$ ${%}`
+|> chalk.dim(%, 'node', args.join(' '))
+|> console.log(%);
 ```
 
 Now, the human reader can **rapidly find** the **initial data**
@@ -192,14 +192,14 @@ For example, using our previous modified
 
 ```js
 envars
- |> Object.keys(%)
- |> %.map(envar =>
+|> Object.keys(%)
+|> %.map(envar =>
     `${envar}=${envars[envar]}`,
   )
- |> %.join(' ')
- |> `$ ${%}`
- |> chalk.dim(%, 'node', args.join(' '))
- |> console.log(%);
+|> %.join(' ')
+|> `$ ${%}`
+|> chalk.dim(%, 'node', args.join(' '))
+|> console.log(%);
 ```
 
 …a version using temporary variables would look like this:
@@ -310,28 +310,28 @@ For example, using our previous modified
 
 ```js
 envars
- |> Object.keys(%)
- |> %.map(envar =>
+|> Object.keys(%)
+|> %.map(envar =>
     `${envar}=${envars[envar]}`,
   )
- |> %.join(' ')
- |> `$ ${%}`
- |> chalk.dim(%, 'node', args.join(' '))
- |> console.log(%);
+|> %.join(' ')
+|> `$ ${%}`
+|> chalk.dim(%, 'node', args.join(' '))
+|> console.log(%);
 ```
 
 …a version using F# pipes instead of Hack pipes would look like this:
 
 ```js
 envars
- |> Object.keys
- |> x=> x.map(envar =>
+|> Object.keys
+|> x=> x.map(envar =>
     `${envar}=${envars[envar]}`,
   )
- |> x=> x.join(' ')
- |> x=> `$ ${x}`
- |> x=> chalk.dim(x, 'node', args.join(' '))
- |> console.log;
+|> x=> x.join(' ')
+|> x=> `$ ${x}`
+|> x=> chalk.dim(x, 'node', args.join(' '))
+|> console.log;
 ```
 
 </details>
@@ -553,8 +553,8 @@ From [ramda.js][].
 
 ```js
 return list
- |> take(prefix.length, %)
- |> equals(%, prefix);
+|> take(prefix.length, %)
+|> equals(%, prefix);
 ```
 
 <tr>
@@ -573,8 +573,8 @@ From [jquery/build/tasks/sourceMap.js][].
 
 ```js
 var minLoc = 'uglify.all.files'
- |> grunt.config(%)
- |> Object.keys(%)[0];
+|> grunt.config(%)
+|> Object.keys(%)[0];
 ```
 
 <tr>
@@ -593,8 +593,8 @@ From [node/deps/npm/lib/unpublish.js][].
 
 ```js
 const json = pkgs[0]
- |> npa(%).escapedName
- |> await npmFetch.json(%, opts);
+|> npa(%).escapedName
+|> await npmFetch.json(%, opts);
 ```
 
 <tr>
@@ -633,9 +633,9 @@ From [underscore.js][].
 
 ```js
 return pred
- |> cb(%)
- |> _.negate(%)
- |> _.filter(obj, %, context);
+|> cb(%)
+|> _.negate(%)
+|> _.filter(obj, %, context);
 ```
 
 <tr>
@@ -655,9 +655,9 @@ From [jquery/src/core/parseHTML.js][].
 
 ```js
 return data
- |> buildFragment([%], context, scripts)
- |> %.childNodes
- |> jQuery.merge([], %);
+|> buildFragment([%], context, scripts)
+|> %.childNodes
+|> jQuery.merge([], %);
 ```
 
 <tr>
@@ -677,9 +677,9 @@ From [ramda.js][].
 
 ```js
 return xf
- |> bind(%[@@transducer/step'], %)
- |> obj[methodName](%, acc)
- |> xf['@@transducer/result'](%);
+|> bind(%[@@transducer/step'], %)
+|> obj[methodName](%, acc)
+|> xf['@@transducer/result'](%);
 ```
 
 <tr>
@@ -727,11 +727,11 @@ From [react/scripts/jest/jest-cli.js][].
 
 ```js
 require('shared/ReactSymbols')
- |> Object.entries(%)
- |> %.filter(([key]) =>
+|> Object.entries(%)
+|> %.filter(([key]) =>
     key !== 'REACT_ASYNC_MODE_TYPE',
   )
- |> expectToBeUnique(%);
+|> expectToBeUnique(%);
 ```
 
 <tr>
@@ -754,13 +754,13 @@ From [express/lib/response.js][].
 
 ```js
 return links
- |> Object.keys(%)
- |> %.map(function (rel) {
+|> Object.keys(%)
+|> %.map(function (rel) {
     return '<' + links[rel] + '>; rel="'
       + rel + '"';
   })
- |> link + %.join(', ')
- |> this.set('Link', %);
+|> link + %.join(', ')
+|> this.set('Link', %);
 ```
 
 <tr>
@@ -785,14 +785,14 @@ From [react/scripts/jest/jest-cli.js][].
 
 ```js
 envars
- |> Object.keys(%)
- |> %.map(envar =>
+|> Object.keys(%)
+|> %.map(envar =>
     `${envar}=${envars[envar]}`,
   )
- |> %.join(' ')
- |> `$ ${%}`
- |> chalk.dim(%, 'node', args.join(' '))
- |> console.log(%);
+|> %.join(' ')
+|> `$ ${%}`
+|> chalk.dim(%, 'node', args.join(' '))
+|> console.log(%);
 ```
 
 <tr>
@@ -811,8 +811,8 @@ From [jquery/src/core/init.js][].
 
 ```js
 match
- |> context[%]
- |> isFunction(this[match])
+|> context[%]
+|> isFunction(this[match])
   ? this[match](%);
   : this.attr(match, %);
 ```
@@ -831,8 +831,8 @@ From [underscore.js][].
 
 ```js
 return self
- |> srcFn.apply(%, args)
- |> _.isObject(%) ? % : self;
+|> srcFn.apply(%, args)
+|> _.isObject(%) ? % : self;
 ```
 
 <tr>
@@ -854,11 +854,11 @@ From [ramda.js][].
 
 ```js
 return fn
- |> typeof % === 'function'
+|> typeof % === 'function'
   ? _xwrap(%)
   : %
- |> xf(%)
- |> _reduce(%, acc, list);
+|> xf(%)
+|> _reduce(%, acc, list);
 ```
 
 <tr>
@@ -876,7 +876,7 @@ From [underscore.js][].
 
 ```js
 return obj
- |> % == null
+|> % == null
     ? 0
     : isArrayLike(%)
     ? %.length
@@ -903,11 +903,11 @@ From [jquery/src/core/init.js][].
 
 ```js
 context
- |> % && %.nodeType
+|> % && %.nodeType
   ? %.ownerDocument || %
   : document
- |> jQuery.parseHTML(match[1], %, true)
- |> jQuery.merge(%);
+|> jQuery.parseHTML(match[1], %, true)
+|> jQuery.merge(%);
 ```
 
 <tr>
@@ -928,12 +928,12 @@ From [jquery/src/core/init.js][].
 
 ```js
 return context
- |> !% || %.jquery
+|> !% || %.jquery
   // Handle $(expr, $(...))
   ? % || root
   // Handle $(expr, context)
   : this.constructor(%)
- |> %.find(selector);
+|> %.find(selector);
 ```
 
 </table>

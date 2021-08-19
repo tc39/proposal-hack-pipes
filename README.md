@@ -51,7 +51,7 @@ we must find the correct **place to insert** new arguments
 among **many nested parentheses**.
 
 <details>
-<summary>Real-world example</summary>
+<summary><strong>Real-world example</strong></summary>
 
 Consider this [real-world code from React][react/scripts/jest/jest-cli.js].
 
@@ -119,9 +119,9 @@ There is even a name for this style of programming:
 [fluent interfaces]: https://en.wikipedia.org/wiki/Fluent_interface
 
 Unfortunately, for all of its fluency,
-method chaining alone cannot accomodate JavaScript’s other syntaxes:
+**method chaining** alone cannot accomodate JavaScript’s **other syntaxes**:
 function calls, arithmetic, array/object literals, `await` and `yield`, etc.
-In this way, method chaining remains limited in its applicability.
+In this way, method chaining remains **limited** in its **applicability**.
 
 ### Pipe operators combine both worlds
 The pipe operator attempts to marry the **convenience** and ease of **method chaining**
@@ -135,7 +135,7 @@ The `|>` operator then does some degree of magic to “pipe” `value`
 from the lefthand side into the righthand side.
 
 <details>
-<summary>Real-world example, continued</summary>
+<summary><strong>Real-world example</strong>, continued</summary>
 
 Continuing this deeply nested [real-world code from React][react/scripts/jest/jest-cli.js]:
 
@@ -180,7 +180,7 @@ causes something similar to method chaining to happen,
 with similar benefits to reading and writing code.
 
 <details>
-<summary>Real-world example, continued</summary>
+<summary><strong>Real-world example</strong>, continued</summary>
 
 For example, using our previous modified
 [real-world example from React][react/scripts/jest/jest-cli.js]:
@@ -296,7 +296,7 @@ This is called [tacit programming or point-free style][tacit].
 [tacit]: https://en.wikipedia.org/wiki/Tacit_programming
 
 <details>
-<summary>Real-world example, continued</summary>
+<summary><strong>Real-world example</strong>, continued</summary>
 
 For example, using our previous modified
 [real-world example from React][react/scripts/jest/jest-cli.js]:

@@ -129,7 +129,7 @@ with the wide **applicability** of **expression nesting**.
 
 The general structure of all the pipe operators is
 `value |>` <var>e1</var> `|>` <var>e2</var> `|>` <var>e3</var>,
-where <var>e1</var>, <var>e2</var>, e3 <var>three</var>
+where <var>e1</var>, <var>e2</var>, <var>e3</var>
 are all expressions that take consecutive values as their parameters.
 The `|>` operator then does some degree of magic to “pipe” `value`
 from the lefthand side into the righthand side.
@@ -684,11 +684,11 @@ From [ramda.js][].
 ```js
 try {
   return arguments
-   |> tryer.apply(this, %);
+  |> tryer.apply(this, %);
 } catch (e) {
   return arguments
-   |> _concat([e], %)
-   |> catcher.apply(this, %);
+  |> _concat([e], %)
+  |> catcher.apply(this, %);
 }
 ```
 
@@ -736,9 +736,9 @@ From [express/lib/response.js][].
 return links
 |> Object.keys(%)
 |> %.map(function (rel) {
-    return '<' + links[rel] + '>; rel="'
-      + rel + '"';
-  })
+  return '<' + links[rel] + '>; rel="'
+    + rel + '"';
+})
 |> link + %.join(', ')
 |> this.set('Link', %);
 ```
@@ -765,7 +765,7 @@ From [react/scripts/jest/jest-cli.js][].
 envars
 |> Object.keys(%)
 |> %.map(envar =>
-    `${envar}=${envars[envar]}`)
+  `${envar}=${envars[envar]}`)
 |> %.join(' ')
 |> `$ ${%}`
 |> chalk.dim(%, 'node', args.join(' '))

@@ -602,8 +602,8 @@ From [lodash.js][].
 ```js
 function listCacheHas (key) {
   return this.__data__
-   |> assocIndexOf(%, key)
-   |> % > -1;
+  |> assocIndexOf(%, key)
+  |> % > -1;
 }
 ```
 

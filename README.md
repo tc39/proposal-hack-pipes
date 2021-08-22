@@ -468,7 +468,7 @@ then evaluates its righthand side (the **pipe body**) with that binding.
 The resulting value of the righthand side
 becomes the whole pipe expression’s final value (the **pipe output**).
 
-The pipe operator’s [precedence][] is the **same** as:
+The pipe operator’s precedence is the **same** as:
 * the function arrow `=>`;
 * the assignment operators `=`, `+=`, etc.;
 * the generator operators `yield` and `yield *`;
@@ -493,7 +493,8 @@ is also **invalid syntax**.
 
 To prevent confusing grouping,
 it is **invalid** syntax to use **other** operators that have the **same precedence**
-(the function arrow `=>`, the assignment operators, and the yield operators)
+(the arrow `=>`, the ternary conditional operator `?` `:`,
+the assignment operators, and the `yield` operator)
 as a **pipe head or body**.
 When using, we must use **parentheses**
 to explicitly indicate which precedence is correct.
@@ -518,8 +519,6 @@ such as with `value |> (sideEffect(), %)`.
 As usual, the comma expression will evaluate to its righthand side `%`,
 essentially passing through the topic value without modifying it.
 This is especially useful for quick debugging: `value |> (console.log(%), %)`.
-
-[precedence]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
 
 ## Real-world examples
 Only minor formatting changes have been made to the status-quo examples.

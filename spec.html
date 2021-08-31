@@ -54,16 +54,6 @@ contributors: J. S. Choi
           RegularExpressionLiteral
           TemplateLiteral
 
-        EqualityExpression :
-          EqualityExpression `==` RelationalExpression
-          EqualityExpression `!=` RelationalExpression
-          EqualityExpression `===` RelationalExpression
-          EqualityExpression `!==` RelationalExpression
-          <ins class="block">
-          `&percnt;==` RelationalExpression
-          `&percnt;===` RelationalExpression
-          </ins>
-
         <ins>PipeExpression :
           ShortCircuitExpression `|&gt;` PipeBody</ins>
       </emu-grammar>
@@ -130,33 +120,6 @@ contributors: J. S. Choi
       <p>With parameter _symbol_.</p>
 
       <ins class=block>
-        <emu-grammar>
-        EqualityExpression :
-          `&percnt;==` RelationalExpression
-          `&percnt;===` RelationalExpression
-        </emu-grammar>
-
-        <emu-alg>
-        1. If _symbol_ is `&percnt;`, return *true*.
-        1. For each child node _child_ of this Parse Node, do
-          1. If _child_ is an instance of _symbol_, return *true*.
-          1. If _child_ is an instance of a nonterminal, then
-            1. Let _contained_ be the result of _child_ Contains _symbol_.
-            1. If _contained_ is *true*, return *true*.
-        1. Return *false*.
-        </emu-alg>
-
-        <emu-note>
-          <p>Several early error rules for |ScriptBody| and for
-          |ModuleItemList|, as well as a step in CreateDynamicFunction,
-          use the Contains operation to check for any unbound topic reference `&percnt;`.
-          With this definition,
-          any |EqualityExpression| that uses `&percnt;==` or `&percnt;===`
-          is considered to contain `&percnt;`.
-          This guarantees that `&percnt;==` and `&percnt;===` may only be
-          used within a topic-binding environment created by a |PipeBody|.</p>
-        </emu-note>
-
         <emu-grammar>PipeBody : PipeExpression</emu-grammar>
 
         <emu-alg>
@@ -216,12 +179,6 @@ contributors: J. S. Choi
           AsyncGeneratorExpression
           RegularExpressionLiteral
           TemplateLiteral
-
-        EqualityExpression :
-          <ins class="block">
-          `&percnt;==` RelationalExpression
-          `&percnt;===` RelationalExpression
-          </ins>
 
         <ins>PipeExpression :
           ShortCircuitExpression `|&gt;` PipeBody</ins>
@@ -579,7 +536,6 @@ contributors: J. S. Choi
         `.` `...` `;` `,`
         `&lt;` `&gt;` `&lt;=` `&gt;=`
         `==` `!=` `===` `!==`
-        <ins>`&percnt;==` `&percnt;===`</ins>
         `+` `-` `*` `%` `**`
         `++` `--`
         `&lt;&lt;` `&gt;&gt;` `&gt;&gt;&gt;`
@@ -663,18 +619,6 @@ contributors: J. S. Choi
       </emu-note>
 
       <emu-note>
-        <p>The `&percnt;==` and `&percnt;===` punctuators
-        respectively "combine" the topic reference `&percnt;`
-        with the equality operators `==` and `===`.
-        These punctuators are declared in addition to `&percnt;`, `==`, and `===`
-        so that the lexical grammar may distinguish them
-        from the modulo assignment operator `&percnt;=`.
-        See also the
-        <emu-xref href="#sec-equality-operators">Equality Operators</emu-xref>
-        clause.</p>
-      </emu-note>
-
-      <emu-note>
         <p>An <dfn>unbound topic reference</dfn> is a topic reference that
         is not present within any topic-binding environment created by a |PipeBody|.
         All unbound topic references are invalid syntax.
@@ -683,10 +627,6 @@ contributors: J. S. Choi
         use the
         <emu-xref href="#sec-syntax-directed-operations-contains">Contains</emu-xref>
         operation to check for any unbound topic reference `&percnt;`.
-        (Any |EqualityExpression| that uses `&percnt;==` and `&percnt;===`
-        is also considered to
-        <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
-        `&percnt;` for this purpose.)
         Any inner topic reference within a |PipeBody| is hidden from these rules,
         preventing them from triggering the rules during program
         compilation.</p>
@@ -714,98 +654,6 @@ contributors: J. S. Choi
         1. Return GetPrimaryTopicValue().
         </emu-alg>
       </emu-clause>
-    </emu-clause>
-  </emu-clause>
-
-  <emu-clause id="sec-equality-operators">
-    <h1>Equality Operators</h1>
-
-    <emu-note type=editor>
-      <p>This section augments the <a
-      href=https://tc39.github.io/ecma262/#sec-equality-operators>original
-      Equality Operators clause</a>.</p>
-
-      <p>It presumptively uses `&percnt;` as the placeholder token for the
-      topic reference. This choice of token is not a final decision; `&percnt;`
-      could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
-    </emu-note>
-
-    <h2>Syntax</h2>
-    <emu-grammar type="definition">
-      EqualityExpression[In, Yield, Await] :
-        RelationalExpression[?In, ?Yield, ?Await]
-        EqualityExpression[?In, ?Yield, ?Await] `==` RelationalExpression[?In, ?Yield, ?Await]
-        EqualityExpression[?In, ?Yield, ?Await] `!=` RelationalExpression[?In, ?Yield, ?Await]
-        EqualityExpression[?In, ?Yield, ?Await] `===` RelationalExpression[?In, ?Yield, ?Await]
-        EqualityExpression[?In, ?Yield, ?Await] `!==` RelationalExpression[?In, ?Yield, ?Await]
-        <ins class="block">
-        `&percnt;==` RelationalExpression[?In, ?Yield, ?Await]
-        `&percnt;===` RelationalExpression[?In, ?Yield, ?Await]
-        </ins>
-    </emu-grammar>
-
-    <ins class="block">
-    <emu-note>
-      <p>The `&percnt;==` and `&percnt;===` punctuators
-      respectively "combine" the topic reference `&percnt;`
-      with the equality operators `==` and `===`.
-      These punctuators are declared—in addition to `&percnt;`, `==`, and `===`—
-      so that the lexical grammar may distinguish them
-      from the modulo assignment operator `&percnt;=`.</p>
-
-      <p>For example:<br>
-      `x |&gt; z&percnt;=y` is equivalent to `x |&gt; z &percnt;= y`,<br>
-      `x |&gt; &percnt;==y` is equivalent to `x |&gt; &percnt; == y`, and<br>
-      `x |&gt; &percnt;===y` is equivalent to `x |&gt; &percnt; === y`.</p>
-
-      <p>Several early error rules for |ScriptBody| and for
-      |ModuleItemList|, as well as a step in CreateDynamicFunction,
-      use the Contains operation to check for any unbound topic reference.
-      (Any |EqualityExpression| that uses `&percnt;==` or `&percnt;===`
-      is considered to
-      <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
-      `&percnt;` for this purpose.)
-      This guarantees that `&percnt;==` and `&percnt;===` may only be
-      used within a topic-binding environment created by a |PipeBody|.</p>
-    </emu-note>
-    </ins>
-
-    <emu-clause id="sec-equality-operators-runtime-semantics-evaluation">
-      <h1>Runtime Semantics: Evaluation</h1>
-      <ins class="block">
-        <emu-grammar>EqualityExpression : `&percnt;==` RelationalExpression</emu-grammar>
-        <emu-alg>
-          1. Let _lval_ be GetPrimaryTopicValue(_lref_).
-          1. Let _rref_ be the result of evaluating |RelationalExpression|.
-          1. Let _rval_ be ? GetValue(_rref_).
-          1. Return IsLooselyEqual(_rval_, _lval_).
-        </emu-alg>
-        <emu-grammar>EqualityExpression : EqualityExpression `&percnt;===` RelationalExpression</emu-grammar>
-        <emu-alg>
-          1. Let _lval_ be GetPrimaryTopicValue(_lref_).
-          1. Let _rref_ be the result of evaluating |RelationalExpression|.
-          1. Let _rval_ be ? GetValue(_rref_).
-          1. Return IsStrictlyEqual(_rval_, _lval_).
-        </emu-alg>
-        <emu-note>
-          <p>An |EqualityExpression| that uses `&percnt;==` or `&percnt;===`
-          must not
-          <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
-          an unbound topic reference,
-          and an |EqualityExpression| may be evaluated only when
-          the running execution context's topic environment is not *null*.
-          This is syntactically enforced by early error rules
-          for |ScriptBody| and for |ModuleItemList|,
-          as well as a step in CreateDynamicFunction.
-          These rules use the
-          <emu-xref href="#sec-syntax-directed-operations-contains">Contains</emu-xref>
-          operation to check for any unbound topic reference,
-          and any |EqualityExpression| that uses `&percnt;==` or `&percnt;===`
-          is considered to
-          <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
-          `&percnt;` for this purpose.</p>
-        </emu-note>
-      </ins>
     </emu-clause>
   </emu-clause>
 
@@ -850,10 +698,6 @@ contributors: J. S. Choi
         because its |PipeBody| does not
         <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
         a topic reference `&percnt;`.
-        (Any |EqualityExpression| that uses `&percnt;==` or `&percnt;===`
-        is considered to
-        <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
-        `&percnt;` for this purpose.)
         This design is such because omission of any topic reference from a |PipeBody|
         is almost certainly an accidental programmer error.</p>
       </emu-note>
@@ -1091,7 +935,7 @@ contributors: J. S. Choi
             1. NOTE: If this step is reached, _sourceText_ must match _exprSym_ (although the reverse implication does not hold). The purpose of the next two steps is to enforce any Early Error rules which apply to _exprSym_ directly.
             1. Let _expr_ be ParseText(_sourceText_, _exprSym_).
             1. If _expr_ is a List of errors, throw a *SyntaxError* exception.
-            1. <ins>NOTE: The dynamic function must not <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref> an unbound topic reference `&percnt;`. (Any |EqualityExpression| that uses `&percnt;==` or `&percnt;===` is considered to <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref> `&percnt;` for this purpose.)</ins>
+            1. <ins>NOTE: The dynamic function must not <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref> an unbound topic reference `&percnt;`.)</ins>
             1. <ins>If _expr_ Contains `&percnt;` is *true*, throw a *SyntaxError* exception.</ins>
             1. Let _proto_ be ? GetPrototypeFromConstructor(_newTarget_, _fallbackProto_).
             1. Let _realmF_ be the current Realm Record.

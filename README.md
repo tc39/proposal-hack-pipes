@@ -557,7 +557,7 @@ return xf['@@transducer/result'](obj[methodName](bind(xf['@@transducer/step'], x
 
 // With pipes
 return xf
-|> bind(^[@@transducer/step'], ^)
+|> bind(^['@@transducer/step'], ^)
 |> obj[methodName](^, acc)
 |> xf['@@transducer/result'](^);
 ```

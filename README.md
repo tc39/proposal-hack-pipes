@@ -1,5 +1,5 @@
 # Hack pipe operator for JavaScript
-ECMAScript Stage-0 Proposal. J. S. Choi, 2021.
+ECMAScript Stage-2 Proposal. J. S. Choi, 2021.
 
 * **[Specification][]**
 * **Babel plugin**: [Implemented in v7.15][Babel 7.15]. See [Babel documentation][].

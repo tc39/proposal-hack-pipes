@@ -523,15 +523,6 @@ This is especially useful for quick debugging: `value |> (console.log(^), ^)`.
 ## Real-world examples
 The only changes to the original examples were dedentation and removal of comments.
 
-From [ramda.js][]:
-```js
-// Status quo
-return equals(take(prefix.length, list), prefix);
-
-// With pipes
-return take(prefix.length, list) |> equals(^, prefix);
-```
-
 From [jquery/build/tasks/sourceMap.js][]:
 ```js
 // Status quo
@@ -550,15 +541,6 @@ const json = await npmFetch.json(npa(pkgs[0]).escapedName, opts);
 const json = pkgs[0] |> npa(^).escapedName |> await npmFetch.json(^, opts);
 ```
 
-From [lodash.js][]:
-```js
-// Status quo
-return assocIndexOf(this.__data__, key) > -1;
-
-// With pipes
-return this.__data__ |> assocIndexOf(^, key) > -1;
-```
-
 From [underscore.js][]:
 ```js
 // Status quo
@@ -566,17 +548,6 @@ return filter(obj, negate(cb(predicate)), context);
 
 // With pipes
 return cb(pred) |> _.negate(^) |> _.filter(obj, ^, context);
-```
-
-From [jquery/src/core/parseHTML.js][]:
-```js
-// Status quo
-parsed = buildFragment( [ data ], context, scripts );
-return jQuery.merge( [], parsed.childNodes );
-
-// With pipes
-parsed = buildFragment([^], context, scripts);
-return parsed.childNodes |> jQuery.merge([], ^);
 ```
 
 From [ramda.js][].
@@ -600,31 +571,15 @@ try {
   return catcher.apply(this, _concat([e], arguments));
 }
 
-// With pipes
+// With pipes: Note the visual parallelism between the two clauses.
 try {
-  return arguments |> tryer.apply(this, ^);
+  return arguments
+  |> tryer.apply(this, ^);
 } catch (e) {
-  return arguments |> _concat([e], ^) |> catcher.apply(this, ^);
+  return arguments
+  |> _concat([e], ^)
+  |> catcher.apply(this, ^);
 }
-```
-
-From [react/packages/shared/__tests__/ReactSymbols-test.internal.js][].
-```js
-// Status quo
-const entries = Object.entries(require('shared/ReactSymbols')).filter(
-  // REACT_ASYNC_MODE_TYPE and REACT_CONCURRENT_MODE_TYPE have the same numeric value
-  // for legacy backwards compatibility
-  ([key]) => key !== 'REACT_ASYNC_MODE_TYPE',
-);
-
-// With pipes
-const entries = require('shared/ReactSymbols')
-|> Object.entries(^)
-|> ^.filter(([key]) =>
-  // REACT_ASYNC_MODE_TYPE and REACT_CONCURRENT_MODE_TYPE have the same numeric value
-  // for legacy backwards compatibility
-  key !== 'REACT_ASYNC_MODE_TYPE',
-);
 ```
 
 From [express/lib/response.js][].
@@ -666,36 +621,6 @@ envars
 |> console.log(^);
 ```
 
-From [jquery/src/core/init.js][].
-```js
-// Status quo
-if ( jQuery.isFunction( this[ match ] ) ) {
-  this[ match ]( context[ match ] );
-} else {
-  this.attr( match, context[ match ] );
-}
-
-// With pipes
-match
-|> context[^]
-|> (isFunction(this[match])
-  ? this[match](^)
-  : this.attr(match, ^));
-```
-
-From [underscore.js][].
-```js
-// Status quo
-var result = sourceFunc.apply(self, args);
-if (isObject(result)) return result;
-return self;
-
-// With pipes
-return self
-|> sourceFunc.apply(^, args)
-|> (_.isObject(^) ? ^ : self);
-```
-
 From [ramda.js][].
 ```js
 // Status quo
@@ -706,21 +631,6 @@ return fn
 |> (typeof ^ === 'function' ? _xwrap(^) : ^)
 |> xf(^)
 |> _reduce(^, acc, list);
-```
-
-From [underscore.js][].
-```js
-// Status quo
-if (obj == null) return 0;
-return isArrayLike(obj) ? obj.length : keys(obj).length;
-
-// With pipes
-return obj
-|> (^ == null
-  ? 0
-  : isArrayLike(^)
-  ? ^.length
-  : _.keys(^).length);
 ```
 
 From [jquery/src/core/init.js][].
@@ -739,40 +649,14 @@ context
 |> jQuery.merge(^);
 ```
 
-From [jquery/src/core/init.js][].
-```js
-// Status quo
-// HANDLE: $(expr, $(...))
-else if ( !context || context.jquery ) {
-  return ( context || root ).find( selector );
-// HANDLE: $(expr, context)
-// (which is just equivalent to: $(context).find(expr)
-} else {
-  return this.constructor( context ).find( selector );
-}
-
-// With pipes
-return context
-|> (!^ || ^.jquery
-  // HANDLE: $(expr, $(...))
-  ? ^ || root
-  // HANDLE: $(expr, context)
-  // (which is just equivalent to: $(context).find(expr)
-  : this.constructor(^))
-|> ^.find(selector);
-```
-
 [ramda.js]: https://github.com/ramda/ramda/blob/v0.27.1/dist/ramda.js
 [node/deps/npm/lib/unpublish.js]: https://github.com/nodejs/node/blob/v16.x/deps/npm/lib/unpublish.js
 [node/deps/v8/test/mjsunit/regress/regress-crbug-158185.js]: https://github.com/nodejs/node/blob/v16.x/deps/v8/test/mjsunit/regress/regress-crbug-158185.js
 [express/lib/response.js]: https://github.com/expressjs/express/blob/5.0/lib/response.js
 [react/scripts/jest/jest-cli.js]: https://github.com/facebook/react/blob/17.0.2/scripts/jest/jest-cli.js
-[react/packages/shared/__tests__/ReactSymbols-test.internal.js]: https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/shared/__tests__/ReactSymbols-test.internal.js
 [jquery/build/tasks/sourceMap.js]: https://github.com/jquery/jquery/blob/2.2-stable/build/tasks/sourcemap.js
-[jquery/src/core/parseHTML.js]: https://github.com/jquery/jquery/blob/2.2-stable/src/core/parseHTML.js
 [jquery/src/core/init.js]: https://github.com/jquery/jquery/blob/2.2-stable/src/core/init.js
 [underscore.js]: https://underscorejs.org/docs/underscore-esm.html
-[lodash.js]: https://www.runpkg.com/?lodash@4.17.20/lodash.js
 
 ## Possible future extensions
 

@@ -626,7 +626,7 @@ try {
 }
 ```
 
-From [react/scripts/jest/jest-cli.js][].
+From [react/packages/shared/__tests__/ReactSymbols-test.internal.js][].
 ```js
 const entries =
   Object.entries(
@@ -785,6 +785,7 @@ return context
 [node/deps/v8/test/mjsunit/regress/regress-crbug-158185.js]: https://github.com/nodejs/node/blob/v16.x/deps/v8/test/mjsunit/regress/regress-crbug-158185.js
 [express/lib/response.js]: https://github.com/expressjs/express/blob/5.0/lib/response.js
 [react/scripts/jest/jest-cli.js]: https://github.com/facebook/react/blob/17.0.2/scripts/jest/jest-cli.js
+[react/packages/shared/__tests__/ReactSymbols-test.internal.js]: https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/shared/__tests__/ReactSymbols-test.internal.js
 [jquery/build/tasks/sourceMap.js]: https://github.com/jquery/jquery/blob/2.2-stable/build/tasks/sourcemap.js
 [jquery/src/core/parseHTML.js]: https://github.com/jquery/jquery/blob/2.2-stable/src/core/parseHTML.js
 [jquery/src/core/init.js]: https://github.com/jquery/jquery/blob/2.2-stable/src/core/init.js

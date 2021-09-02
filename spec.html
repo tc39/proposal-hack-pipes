@@ -18,9 +18,9 @@ contributors: J. S. Choi
   href=https://github.com/js-choi/proposal-hack-pipes/blob/main/README.md>the proposal's
   explainer</a> for the proposal's background, motivation, and usage examples.</p>
 
-  <p>This document presumptively uses `&percnt;` as the token
+  <p>This document presumptively uses `&hat;` as the token
   for the topic reference. This choice of token is not a final decision;
-  `&percnt;` could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
+  `&hat;` could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
 </emu-intro>
 
 <emu-clause id="sec-syntax-directed-operations">
@@ -38,15 +38,15 @@ contributors: J. S. Choi
         href=https://tc39.es/ecma262/#sec-static-semantics-isfunctiondefinition>original
         IsFunctionDefinition clause</a>.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
       <emu-grammar>
         PrimaryExpression :
           `this`
-          <ins>`&percnt;`</ins>
+          <ins>`&hat;`</ins>
           IdentifierReference
           Literal
           ArrayLiteral
@@ -71,8 +71,8 @@ contributors: J. S. Choi
         href=https://tc39.es/ecma262/#sec-static-semantics-isidentifierref>original IsIdentifierRef
         clause</a>.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
@@ -83,7 +83,7 @@ contributors: J. S. Choi
       <emu-grammar>
         PrimaryExpression :
           `this`
-          <ins>`&percnt;`</ins>
+          <ins>`&hat;`</ins>
           Literal
           ArrayLiteral
           ObjectLiteral
@@ -110,8 +110,8 @@ contributors: J. S. Choi
       href=https://tc39.es/ecma262/#sec-syntax-directed-operations-contains>original
       Contains clause</a>.</p>
 
-      <p>It presumptively uses `&percnt;` as the placeholder token for the
-      topic reference. This choice of token is not a final decision; `&percnt;`
+      <p>It presumptively uses `&hat;` as the placeholder token for the
+      topic reference. This choice of token is not a final decision; `&hat;`
       could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
     </emu-note>
 
@@ -123,7 +123,7 @@ contributors: J. S. Choi
         <emu-grammar>PipeBody : PipeExpression</emu-grammar>
 
         <emu-alg>
-        1. If _symbol_ is `&percnt;`, return *false*.
+        1. If _symbol_ is `&hat;`, return *false*.
         1. For each child node _child_ of this Parse Node, do
           1. If _child_ is an instance of _symbol_, return *true*.
           1. If _child_ is an instance of a nonterminal, then
@@ -135,7 +135,7 @@ contributors: J. S. Choi
         <emu-note>
           <p>Several early error rules for |ScriptBody| and for
           |ModuleItemList|, as well as a step in CreateDynamicFunction,
-          use the Contains operation to check for any unbound topic reference `&percnt;`.
+          use the Contains operation to check for any unbound topic reference `&hat;`.
           Any inner topic reference within a |PipeBody| is hidden from these rules,
           preventing them from triggering the rules during program
           compilation.</p>
@@ -160,15 +160,15 @@ contributors: J. S. Choi
         href=https://tc39.es/ecma262/#sec-static-semantics-assignmenttargettype>original
         AssignmentTargetType clause</a>.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
       <emu-grammar>
         PrimaryExpression :
           `this`
-          <ins>`&percnt;`</ins>
+          <ins>`&hat;`</ins>
           Literal
           ArrayLiteral
           ObjectLiteral
@@ -234,8 +234,8 @@ contributors: J. S. Choi
           href=https://tc39.github.io/ecma262/#sec-declarative-environment-records
           >original Declarative Environment Records clause</a>.</p>
 
-          <p>It presumptively uses `&percnt;` as the placeholder token for the
-          topic reference. This choice of token is not a final decision; `&percnt;`
+          <p>It presumptively uses `&hat;` as the placeholder token for the
+          topic reference. This choice of token is not a final decision; `&hat;`
           could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
         </emu-note>
 
@@ -410,13 +410,13 @@ contributors: J. S. Choi
         href=https://tc39.github.io/ecma262/#sec-environment-records>original
         Environment Records clause</a>.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
       <p>The <dfn>topic binding</dfn> of a declarative Environment Record
-      immutably binds the topic reference `&percnt;` to one value of any
+      immutably binds the topic reference `&hat;` to one value of any
       ECMAScript language type (called the <dfn>topic value</dfn> or simply
       the <dfn>topic</dfn>), within that declarative Environment Record, at
       the time of the Environment Record's instantiation. The topic of a
@@ -525,8 +525,8 @@ contributors: J. S. Choi
       href=https://tc39.github.io/ecma262/#sec-punctuators>original
       Punctuators clause</a>.</p>
 
-      <p>It presumptively uses `&percnt;` as the placeholder token for the
-      topic reference. This choice of token is not a final decision; `&percnt;`
+      <p>It presumptively uses `&hat;` as the placeholder token for the
+      topic reference. This choice of token is not a final decision; `&hat;`
       could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
     </emu-note>
 
@@ -563,8 +563,8 @@ contributors: J. S. Choi
       href=https://tc39.github.io/ecma262/#sec-primary-expression>original
       Primary Expression clause</a>.</p>
 
-      <p>It presumptively uses `&percnt;` as the placeholder token for the
-      topic reference. This choice of token is not a final decision; `&percnt;`
+      <p>It presumptively uses `&hat;` as the placeholder token for the
+      topic reference. This choice of token is not a final decision; `&hat;`
       could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
     </emu-note>
 
@@ -572,7 +572,7 @@ contributors: J. S. Choi
     <emu-grammar type="definition">
       PrimaryExpression[Yield, Await] :
         `this`
-        <ins>`&percnt;`</ins>
+        <ins>`&hat;`</ins>
         IdentifierReference[?Yield, ?Await]
         Literal
         ArrayLiteral[?Yield, ?Await]
@@ -597,17 +597,17 @@ contributors: J. S. Choi
         href=https://tc39.github.io/ecma262/#sec-identifier-reference>original
         Identifier Reference clause</a>.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
       <emu-note>
-        <p>The <dfn>topic reference</dfn>, which is the token `&percnt;`, is a
+        <p>The <dfn>topic reference</dfn>, which is the token `&hat;`, is a
         nullary operator that evaluates to the current Environment Record's
         topic value. The topic reference acts as if it were a special variable,
         implicitly bound to the topic value, yet still lexically scoped. But
-        `&percnt;` is not actually an |IdentifierName| and the topic reference is
+        `&hat;` is not actually an |IdentifierName| and the topic reference is
         not a variable, and it cannot be bound by typical assignment.
         Instead, the topic reference is immutably bound to a value
         during the instantiation of any topic-binding environment by a |PipeBody|.</p>
@@ -626,7 +626,7 @@ contributors: J. S. Choi
         |ModuleItemList|, as well as a step in CreateDynamicFunction,
         use the
         <emu-xref href="#sec-syntax-directed-operations-contains">Contains</emu-xref>
-        operation to check for any unbound topic reference `&percnt;`.
+        operation to check for any unbound topic reference `&hat;`.
         Any inner topic reference within a |PipeBody| is hidden from these rules,
         preventing them from triggering the rules during program
         compilation.</p>
@@ -649,7 +649,7 @@ contributors: J. S. Choi
           operation to check for any unbound topic reference.</p>
         </emu-note>
 
-        <emu-grammar>PrimaryExpression : `&percnt;`</emu-grammar>
+        <emu-grammar>PrimaryExpression : `&hat;`</emu-grammar>
         <emu-alg>
         1. Return GetPrimaryTopicValue().
         </emu-alg>
@@ -682,14 +682,14 @@ contributors: J. S. Choi
       <emu-note type=editor>
         <p>This section is a wholly new sub-clause.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
       <emu-grammar>PipeBody : PipeExpression</emu-grammar>
       <emu-alg>
-        1. It is a Syntax Error if |PipeBody| Contains `&percnt;` is *false*.
+        1. It is a Syntax Error if |PipeBody| Contains `&hat;` is *false*.
       </emu-alg>
 
       <emu-note>
@@ -697,7 +697,7 @@ contributors: J. S. Choi
         `value |&gt; foo + 1` is an early error,
         because its |PipeBody| does not
         <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref>
-        a topic reference `&percnt;`.
+        a topic reference `&hat;`.
         This design is such because omission of any topic reference from a |PipeBody|
         is almost certainly an accidental programmer error.</p>
       </emu-note>
@@ -782,8 +782,8 @@ contributors: J. S. Choi
       href=https://tc39.github.io/ecma262/#sec-scripts>original
       Scripts clause</a>.</p>
 
-      <p>It presumptively uses `&percnt;` as the placeholder token for the
-      topic reference. This choice of token is not a final decision; `&percnt;`
+      <p>It presumptively uses `&hat;` as the placeholder token for the
+      topic reference. This choice of token is not a final decision; `&hat;`
       could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
     </emu-note>
 
@@ -793,7 +793,7 @@ contributors: J. S. Choi
       <emu-grammar>Script : ScriptBody</emu-grammar>
       <ul>
         <li>
-          <ins>It is a Syntax Error if |ScriptBody| Contains `&percnt;` is *true*.</ins>
+          <ins>It is a Syntax Error if |ScriptBody| Contains `&hat;` is *true*.</ins>
         </li>
       </ul>
       <ins class="block">
@@ -823,8 +823,8 @@ contributors: J. S. Choi
         href=https://tc39.github.io/ecma262/#sec-module-semantics>original
         Module Semantics clause</a>.</p>
 
-        <p>It presumptively uses `&percnt;` as the placeholder token for the
-        topic reference. This choice of token is not a final decision; `&percnt;`
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
         could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
       </emu-note>
 
@@ -833,7 +833,7 @@ contributors: J. S. Choi
         <emu-grammar>ModuleBody : ModuleItemList</emu-grammar>
         <ul>
           <li>
-            <ins>It is a Syntax Error if |ModuleItemList| Contains `&percnt;`
+            <ins>It is a Syntax Error if |ModuleItemList| Contains `&hat;`
             is *true*.</ins>
           </li>
         </ul>
@@ -875,8 +875,8 @@ contributors: J. S. Choi
             href=https://tc39.github.io/ecma262/#sec-createdynamicfunction>original
             CreateDynamicFunction clause</a>.</p>
 
-            <p>It presumptively uses `&percnt;` as the placeholder token for the
-            topic reference. This choice of token is not a final decision; `&percnt;`
+            <p>It presumptively uses `&hat;` as the placeholder token for the
+            topic reference. This choice of token is not a final decision; `&hat;`
             could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
           </emu-note>
 
@@ -935,8 +935,8 @@ contributors: J. S. Choi
             1. NOTE: If this step is reached, _sourceText_ must match _exprSym_ (although the reverse implication does not hold). The purpose of the next two steps is to enforce any Early Error rules which apply to _exprSym_ directly.
             1. Let _expr_ be ParseText(_sourceText_, _exprSym_).
             1. If _expr_ is a List of errors, throw a *SyntaxError* exception.
-            1. <ins>NOTE: The dynamic function must not <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref> an unbound topic reference `&percnt;`.)</ins>
-            1. <ins>If _expr_ Contains `&percnt;` is *true*, throw a *SyntaxError* exception.</ins>
+            1. <ins>NOTE: The dynamic function must not <emu-xref href="#sec-syntax-directed-operations-contains">contain</emu-xref> an unbound topic reference `&hat;`.)</ins>
+            1. <ins>If _expr_ Contains `&hat;` is *true*, throw a *SyntaxError* exception.</ins>
             1. Let _proto_ be ? GetPrototypeFromConstructor(_newTarget_, _fallbackProto_).
             1. Let _realmF_ be the current Realm Record.
             1. Let _scope_ be _realmF_.[[GlobalEnv]].

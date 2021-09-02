@@ -6,10 +6,10 @@ ECMAScript Stage-2 Proposal. J. S. Choi, 2021.
 
 This explainer was adapted from an [essay by Tab Atkins][] with permission.
 
-(This document presumptively uses `%`
+(This document presumptively uses `^`
 as the placeholder token for the topic reference.
 This [choice of token is not a final decision][token bikeshedding];
-`%` could instead be `#`, `@`, `?`, or many other tokens.)
+`^` could instead be `%`, or many other tokens.)
 
 [specification]: http://jschoi.org/21/es-hack-pipes/
 [Babel 7.15]: https://babeljs.io/blog/2021/07/26/7.15.0#hack-style-pipeline-operator-support-13191httpsgithubcombabelbabelpull13191-13416httpsgithubcombabelbabelpull13416
@@ -152,17 +152,17 @@ console.log(
 ```
 
 …we can **untangle** it as such using a pipe operator
-and a placeholder token (`%`) standing in for the previous operation’s value:
+and a placeholder token (`^`) standing in for the previous operation’s value:
 
 ```js
 envars
-|> Object.keys(%)
-|> %.map(envar =>
+|> Object.keys(^)
+|> ^.map(envar =>
   `${envar}=${envars[envar]}`)
-|> %.join(' ')
-|> `$ ${%}`
-|> chalk.dim(%, 'node', args.join(' '))
-|> console.log(%);
+|> ^.join(' ')
+|> `$ ${^}`
+|> chalk.dim(^, 'node', args.join(' '))
+|> console.log(^);
 ```
 
 Now, the human reader can **rapidly find** the **initial data**
@@ -187,13 +187,13 @@ For example, using our previous modified
 
 ```js
 envars
-|> Object.keys(%)
-|> %.map(envar =>
+|> Object.keys(^)
+|> ^.map(envar =>
   `${envar}=${envars[envar]}`)
-|> %.join(' ')
-|> `$ ${%}`
-|> chalk.dim(%, 'node', args.join(' '))
-|> console.log(%);
+|> ^.join(' ')
+|> `$ ${^}`
+|> chalk.dim(^, 'node', args.join(' '))
+|> console.log(^);
 ```
 
 …a version using temporary variables would look like this:
@@ -248,24 +248,24 @@ correspondingly have **small** and nearly **symmetrical trade-offs**.
 In the **Hack language**’s pipe syntax,
 the righthand side of the pipe is an **expression** containing a special **placeholder**,
 which is evaluated with the placeholder bound to the lefthand side’s value.
-That is, we write `value |> one(%) |> two(%) |> three(%)`
+That is, we write `value |> one(^) |> two(^) |> three(^)`
 to pipe `value` through the three functions.
 
 **Pro:** The righthand side can be **any expression**,
 and the placeholder can go anywhere any normal variable identifier could go,
 so we can pipe to any code we want **without any special rules**:
 
-* `value |> foo(%)` for unary function calls,
-* `value |> foo(1, %)` for n-ary function calls,
-* `value |> %.foo()` for method calls,
-* `value |> % + 1` for arithmetic,
-* `value |> [%, 0]` for array literals,
-* `value |> {foo: %}` for object literals,
-* `` value |> `${%}` `` for template literals,
-* `value |> new Foo(%)` for constructing objects,
-* `value |> await %` for awaiting promises,
-* `value |> (yield %)` for yielding generator values,
-* `value |> import(%)` for calling function-like keywords,
+* `value |> foo(^)` for unary function calls,
+* `value |> foo(1, ^)` for n-ary function calls,
+* `value |> ^.foo()` for method calls,
+* `value |> ^ + 1` for arithmetic,
+* `value |> [^, 0]` for array literals,
+* `value |> {foo: ^}` for object literals,
+* `` value |> `${^}` `` for template literals,
+* `value |> new Foo(^)` for constructing objects,
+* `value |> await ^` for awaiting promises,
+* `value |> (yield ^)` for yielding generator values,
+* `value |> import(^)` for calling function-like keywords,
 * etc.
 
 **Con:** Piping through **unary functions**
@@ -275,7 +275,7 @@ that were created by **[function-currying][] libraries** like [Ramda][],
 as well as [unary arrow functions
 that perform **complex destructuring** on their arguments][destruct]:
 Hack pipes would be slightly more verbose
-with an **explicit** function call suffix `(%)`.
+with an **explicit** function call suffix `(^)`.
 
 [function-currying]: https://en.wikipedia.org/wiki/Currying
 [Ramda]: https://ramdajs.com/
@@ -303,13 +303,13 @@ For example, using our previous modified
 
 ```js
 envars
-|> Object.keys(%)
-|> %.map(envar =>
+|> Object.keys(^)
+|> ^.map(envar =>
   `${envar}=${envars[envar]}`)
-|> %.join(' ')
-|> `$ ${%}`
-|> chalk.dim(%, 'node', args.join(' '))
-|> console.log(%);
+|> ^.join(' ')
+|> `$ ${^}`
+|> chalk.dim(^, 'node', args.join(' '))
+|> console.log(^);
 ```
 
 …a version using F# pipes instead of Hack pipes would look like this:
@@ -340,7 +340,7 @@ that were created by **[function-currying][] libraries** like [Ramda][],
 as well as [unary arrow functions
 that perform **complex destructuring** on their arguments][destruct]:
 F# pipes would be **slightly less verbose**
-with an **implicit** function call (no `(%)`).
+with an **implicit** function call (no `(^)`).
 
 **Con:** The restriction means that **any operations**
 that are performed by **other syntax**
@@ -379,7 +379,7 @@ a small **syntax tax** on different expressions:\
 **F# pipes** slightly tax **all expressions except** unary function calls.
 
 In **both** proposals, the syntax tax per taxed expression is **small**
-(**both** `(%)` and `x=>` are **only three characters**).
+(**both** `(^)` and `x=>` are **only three characters**).
 However, the tax is **multiplied** by the **prevalence**
 of its respectively taxed expressions.
 It therefore might make sense
@@ -418,7 +418,7 @@ with Hack pipes compared to F# pipes.
 
 ### Hack pipes might be simpler to use
 The syntax tax of Hack pipes on unary function calls
-(i.e., the `(%)` to invoke the righthand side’s unary function)
+(i.e., the `(^)` to invoke the righthand side’s unary function)
 is **not a special case**:
 it simply is **explicitly writing ordinary code**,
 in **the way we normally would** without a pipe.
@@ -439,20 +439,20 @@ because `someFunction + 1` isn’t callable.
 ## Description
 (A [formal draft specification][specification] is available.)
 
-The **topic reference** `%` is a **nullary operator**.
+The **topic reference** `^` is a **nullary operator**.
 It acts as a placeholder for a **topic value**,
 and it is **lexically scoped** and **immutable**.
 
 <details>
-<summary><code>%</code> is not a final choice</summary>
+<summary><code>^</code> is not a final choice</summary>
 
 (The precise [**token** for the topic reference is **not final**][token bikeshedding].
-`%` could instead be `#`, `@`, `?`, or many other tokens.
+`^` could instead be `%`, or many other tokens.
 We plan to [**bikeshed** what actual token to use][token bikeshedding]
 **later**, if TC39 advances this proposal.
-However, `%` seems to be the [least syntactically problematic][],
+However, `^` seems to be the [least syntactically problematic][],
 and it also resembles the placeholders of **[printf format strings][]**
-and [**Clojure**’s `#(%)` **function literals**][Clojure function literals].)
+and [**Clojure**’s `#(^)` **function literals**][Clojure function literals].)
 
 [least syntactically problematic]: https://github.com/js-choi/proposal-hack-pipes/issues/2
 [Clojure function literals]: https://clojure.org/reference/reader#_dispatch
@@ -476,8 +476,8 @@ The pipe operator’s precedence is the **same** as:
 It is **tighter** than only the comma operator `,`.\
 It is **looser** than **all other** operators.
 
-For example, `v => v |> % == null |> foo(%, 0)`\
-would group into `v => (v |> (% == null) |> foo(%, 0))`,\
+For example, `v => v |> ^ == null |> foo(^, 0)`\
+would group into `v => (v |> (^ == null) |> foo(^, 0))`,\
 which in turn is equivalent to `v => foo(v == null, 0)`.
 
 A pipe body **must** use its topic value **at least once**.
@@ -498,14 +498,14 @@ the assignment operators, and the `yield` operator)
 as a **pipe head or body**.
 When using, we must use **parentheses**
 to explicitly indicate which precedence is correct.
-For example, `a |> b ? % : c |> %.d` is invalid syntax;
-it should be corrected to either `a |> (b ? % : c) |> %.d`
-or `a |> (b ? % : c |> %.d)`.
+For example, `a |> b ? ^ : c |> ^.d` is invalid syntax;
+it should be corrected to either `a |> (b ? ^ : c) |> ^.d`
+or `a |> (b ? ^ : c |> ^.d)`.
 
 Lastly, topic bindings **inside dynamically compiled** code
 (e.g., with `eval` or `new Function`)
 **cannot** be used **outside** of that code.
-For example, `v |> eval('% + 1')` will throw a syntax error
+For example, `v |> eval('^ + 1')` will throw a syntax error
 when the `eval` expression is evaluated at runtime.
 
 There are **no other special rules**.
@@ -515,10 +515,10 @@ if we need to interpose a **side effect**
 in the middle of a chain of pipe expressions,
 without modifying the data being piped through,
 then we could use a **comma expression**,
-such as with `value |> (sideEffect(), %)`.
-As usual, the comma expression will evaluate to its righthand side `%`,
+such as with `value |> (sideEffect(), ^)`.
+As usual, the comma expression will evaluate to its righthand side `^`,
 essentially passing through the topic value without modifying it.
-This is especially useful for quick debugging: `value |> (console.log(%), %)`.
+This is especially useful for quick debugging: `value |> (console.log(^), ^)`.
 
 ## Real-world examples
 Only minor formatting changes have been made to the status-quo examples.
@@ -544,8 +544,8 @@ From [ramda.js][].
 
 ```js
 return list
-|> take(prefix.length, %)
-|> equals(%, prefix);
+|> take(prefix.length, ^)
+|> equals(^, prefix);
 ```
 
 <tr>
@@ -562,8 +562,8 @@ From [jquery/build/tasks/sourceMap.js][].
 
 ```js
 var minLoc = 'uglify.all.files'
-|> grunt.config(%)
-|> Object.keys(%)[0];
+|> grunt.config(^)
+|> Object.keys(^)[0];
 ```
 
 <tr>
@@ -581,8 +581,8 @@ From [node/deps/npm/lib/unpublish.js][].
 
 ```js
 const json = pkgs[0]
-|> npa(%).escapedName
-|> await npmFetch.json(%, opts);
+|> npa(^).escapedName
+|> await npmFetch.json(^, opts);
 ```
 
 <tr>
@@ -601,8 +601,8 @@ From [lodash.js][].
 ```js
 function listCacheHas (key) {
   return this.__data__
-  |> assocIndexOf(%, key)
-  |> % > -1;
+  |> assocIndexOf(^, key)
+  |> ^ > -1;
 }
 ```
 
@@ -620,9 +620,9 @@ From [underscore.js][].
 
 ```js
 return pred
-|> cb(%)
-|> _.negate(%)
-|> _.filter(obj, %, context);
+|> cb(^)
+|> _.negate(^)
+|> _.filter(obj, ^, context);
 ```
 
 <tr>
@@ -640,9 +640,9 @@ From [jquery/src/core/parseHTML.js][].
 
 ```js
 return data
-|> buildFragment([%], context, scripts)
-|> %.childNodes
-|> jQuery.merge([], %);
+|> buildFragment([^], context, scripts)
+|> ^.childNodes
+|> jQuery.merge([], ^);
 ```
 
 <tr>
@@ -660,9 +660,9 @@ From [ramda.js][].
 
 ```js
 return xf
-|> bind(%[@@transducer/step'], %)
-|> obj[methodName](%, acc)
-|> xf['@@transducer/result'](%);
+|> bind(^[@@transducer/step'], ^)
+|> obj[methodName](^, acc)
+|> xf['@@transducer/result'](^);
 ```
 
 <tr>
@@ -683,11 +683,11 @@ From [ramda.js][].
 ```js
 try {
   return arguments
-  |> tryer.apply(this, %);
+  |> tryer.apply(this, ^);
 } catch (e) {
   return arguments
-  |> _concat([e], %)
-  |> catcher.apply(this, %);
+  |> _concat([e], ^)
+  |> catcher.apply(this, ^);
 }
 ```
 
@@ -708,10 +708,10 @@ From [react/scripts/jest/jest-cli.js][].
 
 ```js
 require('shared/ReactSymbols')
-|> Object.entries(%)
-|> %.filter(([key]) =>
+|> Object.entries(^)
+|> ^.filter(([key]) =>
   key !== 'REACT_ASYNC_MODE_TYPE')
-|> expectToBeUnique(%);
+|> expectToBeUnique(^);
 ```
 
 <tr>
@@ -733,13 +733,13 @@ From [express/lib/response.js][].
 
 ```js
 return links
-|> Object.keys(%)
-|> %.map(function (rel) {
+|> Object.keys(^)
+|> ^.map(function (rel) {
   return '<' + links[rel] + '>; rel="'
     + rel + '"';
 })
-|> link + %.join(', ')
-|> this.set('Link', %);
+|> link + ^.join(', ')
+|> this.set('Link', ^);
 ```
 
 <tr>
@@ -762,13 +762,13 @@ From [react/scripts/jest/jest-cli.js][].
 
 ```js
 envars
-|> Object.keys(%)
-|> %.map(envar =>
+|> Object.keys(^)
+|> ^.map(envar =>
   `${envar}=${envars[envar]}`)
-|> %.join(' ')
-|> `$ ${%}`
-|> chalk.dim(%, 'node', args.join(' '))
-|> console.log(%);
+|> ^.join(' ')
+|> `$ ${^}`
+|> chalk.dim(^, 'node', args.join(' '))
+|> console.log(^);
 ```
 
 <tr>
@@ -787,10 +787,10 @@ From [jquery/src/core/init.js][].
 
 ```js
 match
-|> context[%]
+|> context[^]
 |> (isFunction(this[match])
-  ? this[match](%);
-  : this.attr(match, %));
+  ? this[match](^);
+  : this.attr(match, ^));
 ```
 
 <tr>
@@ -807,8 +807,8 @@ From [underscore.js][].
 
 ```js
 return self
-|> srcFn.apply(%, args)
-|> (_.isObject(%) ? % : self);
+|> srcFn.apply(^, args)
+|> (_.isObject(^) ? ^ : self);
 ```
 
 <tr>
@@ -828,11 +828,11 @@ From [ramda.js][].
 
 ```js
 return fn
-|> (typeof % === 'function'
-  ? _xwrap(%)
-  : %)
-|> xf(%)
-|> _reduce(%, acc, list);
+|> (typeof ^ === 'function'
+  ? _xwrap(^)
+  : ^)
+|> xf(^)
+|> _reduce(^, acc, list);
 ```
 
 <tr>
@@ -850,11 +850,11 @@ From [underscore.js][].
 
 ```js
 return obj
-|> (% == null
+|> (^ == null
   ? 0
-  : isArrayLike(%)
-  ? %.length
-  : _.keys(%).length);
+  : isArrayLike(^)
+  ? ^.length
+  : _.keys(^).length);
 ```
 
 <tr>
@@ -875,11 +875,11 @@ From [jquery/src/core/init.js][].
 
 ```js
 context
-|> (% && %.nodeType
-  ? %.ownerDocument || %
+|> (^ && ^.nodeType
+  ? ^.ownerDocument || ^
   : document)
-|> jQuery.parseHTML(match[1], %, true)
-|> jQuery.merge(%);
+|> jQuery.parseHTML(match[1], ^, true)
+|> jQuery.merge(^);
 ```
 
 <tr>
@@ -900,12 +900,12 @@ From [jquery/src/core/init.js][].
 
 ```js
 return context
-|> (!% || %.jquery
+|> (!^ || ^.jquery
   // Handle $(expr, $(...))
-  ? % || root
+  ? ^ || root
   // Handle $(expr, context)
-  : this.constructor(%))
-|> %.find(selector);
+  : this.constructor(^))
+|> ^.find(selector);
 ```
 
 </table>
@@ -928,7 +928,7 @@ If Hack pipes are added to JavaScript,
 then they could also elegantly handle
 **partial function application** in the future
 with a syntax further inspired by
-[Clojure’s `#(%1 %2)` function literals][Clojure function literals].
+[Clojure’s `#(^1 ^2)` function literals][Clojure function literals].
 
 There is **already** a [proposed special syntax
 for partial function application (PFA) with `?` placeholders][PFA]
@@ -942,7 +942,7 @@ only directly within function-call expressions,
 and **each consecutive** `?` placeholder in an expression
 refers to a **different** argument **value**.
 This is in contrast to **Hack pipes**,
-in which every `%` token in an expression
+in which every `^` token in an expression
 refers to the **same value**.
 `?`-PFA’s design integrates well with **F# pipes**,
 rather than Hack pipes, but this could be changed.
@@ -951,8 +951,8 @@ rather than Hack pipes, but this could be changed.
 
 | `?`-PFA with F# pipes      | Hack pipes                 |
 | -------------------------- | -------------------------- |
-|`x \|> y=> y + 1`           |`x \|> % + 1`               |
-|`x \|> f(?, 0)`             |`x \|> f(%, 0)`             |
+|`x \|> y=> y + 1`           |`x \|> ^ + 1`               |
+|`x \|> f(?, 0)`             |`x \|> f(^, 0)`             |
 |`a.map(x=> x + 1)`          |`a.map(x=> x + 1)`          |
 |`a.map(f(?, 0))`            |`a.map(x=> f(x, 0))`        |
 |`a.map(x=> x + x)`          |`a.map(x=> x + x)`          |
@@ -970,22 +970,22 @@ which would use the same general rules as `|>`.
 `+>` would be a **prefix operator** that **creates a new function**,
 which in turn **binds its argument(s)** to topic references.
 **Non-unary functions** would be created
-by including topic references with **numbers** (`%0`, `%1`, `%2`, etc.) or `...`.
-`%0` (equivalent to plain `%`) would be bound to the **zeroth argument**,
-`%1` would be bound to the next argument, and so on.
-`%...` would be bound to an array of **rest arguments**.
+by including topic references with **numbers** (`^0`, `^1`, `^2`, etc.) or `...`.
+`^0` (equivalent to plain `^`) would be bound to the **zeroth argument**,
+`^1` would be bound to the next argument, and so on.
+`^...` would be bound to an array of **rest arguments**.
 And just as with `|>`, `+>` would require its body
 to contain at least one topic reference
 in order to be syntactically valid.
 
 | `?`-PFA                    | Hack pipe functions        |
 | ---------------------------| -------------------------- |
-|`a.map(x=> x + 1)`          |`a.map(+> % + 1)`           |
-|`a.map(f(?, 0))`            |`a.map(+> f(%, 0))`         |
-|`a.map(x=> x + x)`          |`a.map(+> % + %)`           |
-|`a.map(x=> f(x, x))`        |`a.map(+> f(%, %)`          |
-|`a.sort((x,y)=> x - y)`     |`a.sort(+> %0 - %1)`        |
-|`a.sort(f(?, ?, 0))`        |`a.sort(+> f(%0, %1, 0))`   |
+|`a.map(x=> x + 1)`          |`a.map(+> ^ + 1)`           |
+|`a.map(f(?, 0))`            |`a.map(+> f(^, 0))`         |
+|`a.map(x=> x + x)`          |`a.map(+> ^ + ^)`           |
+|`a.map(x=> f(x, x))`        |`a.map(+> f(^, ^)`          |
+|`a.sort((x,y)=> x - y)`     |`a.sort(+> ^0 - ^1)`        |
+|`a.sort(f(?, ?, 0))`        |`a.sort(+> f(^0, ^1, 0))`   |
 
 Pipe functions would **avoid** the `?`-PFA syntax’s **[garden-path problem][]**.
 When we read the expression **from left to right**,
@@ -1005,30 +1005,30 @@ in ways that would not be possible with `?`-PFA.
 
 | `?`-PFA                    | Hack pipe functions        |
 | -------------------------- | -------------------------- |
-|`a.map(x=> x + 1)`          |`a.map(+> % + 1)`           |
-|`a.map(x=> x + x)`          |`a.map(+> % + %)`           |
-|`a.sort((x,y)=> x - y)`     |`a.sort(+> %0 - %1)`        |
+|`a.map(x=> x + 1)`          |`a.map(+> ^ + 1)`           |
+|`a.map(x=> x + x)`          |`a.map(+> ^ + ^)`           |
+|`a.sort((x,y)=> x - y)`     |`a.sort(+> ^0 - ^1)`        |
 
 ### Hack-pipe syntax for `if`, `catch`, and `for`–`of`
 Many **`if`, `catch`, and `for` statements** could become pithier
 if they gained **“pipe syntax”** that bound the topic reference.
 
-`if () |>` would bind its condition value to `%`,\
-`catch |>` would bind its caught error to `%`,\
-and `for (of) |>` would consecutively bind each of its iterator’s values to `%`.
+`if () |>` would bind its condition value to `^`,\
+`catch |>` would bind its caught error to `^`,\
+and `for (of) |>` would consecutively bind each of its iterator’s values to `^`.
 
 | Status quo                  | Hack-pipe statement syntax |
 | --------------------------- | -------------------------- |
-|`const c = f(); if (c) g(c);`|`if (f()) \|> b(%);`        |
-|`catch (e) f(e);`            |`catch \|> f(%);`           |
-|`for (const v of f()) g(v);` |`for (f()) \|> g(%);`       |
+|`const c = f(); if (c) g(c);`|`if (f()) \|> b(^);`        |
+|`catch (e) f(e);`            |`catch \|> f(^);`           |
+|`for (const v of f()) g(v);` |`for (f()) \|> g(^);`       |
 
 ### Optional Hack pipes
 A **short-circuiting** optional-pipe operator `|?>` could also be useful,
 much in the way `?.` is useful for optional method calls.
 
-For example, `value |> % != null ? await foo(%) : % |> % != null ? % + 1 : %`\
-would be equivalent to `value |?> await foo(%) |?> % + 1`.
+For example, `value |> ^ != null ? await foo(^) : ^ |> ^ != null ? ^ + 1 : ^`\
+would be equivalent to `value |?> await foo(^) |?> ^ + 1`.
 
 ### Tacit unary function application
 **Tacit unary function application** – that is, F# pipes –
@@ -1038,8 +1038,8 @@ similarly to how [Clojure has multiple pipe macros][Clojure pipes]
 
 [Clojure pipes]: https://clojure.org/guides/threading_macros
 
-For example, `value |> % + 1 |>> f |> g(%, 0)`\
-would mean `value |> % + 1 |> f(%) |> g(%, 0)`.
+For example, `value |> ^ + 1 |>> f |> g(^, 0)`\
+would mean `value |> ^ + 1 |> f(^) |> g(^, 0)`.
 
 There was an [informal proposal for such a **split mix** of two pipe operators][split mix],
 which was set aside in favor of single-operator proposals.

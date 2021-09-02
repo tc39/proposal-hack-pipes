@@ -521,84 +521,47 @@ essentially passing through the topic value without modifying it.
 This is especially useful for quick debugging: `value |> (console.log(^), ^)`.
 
 ## Real-world examples
-Only minor formatting changes have been made to the status-quo examples.
 
-<table>
-<thead>
-<tr>
-<th>Status quo
-<th>With Hack pipes
-
-<tbody>
-<tr>
-<td>
-
+From [ramda.js][]:
 ```js
 return equals(
   take(prefix.length, list),
   prefix);
-```
-From [ramda.js][].
 
-<td>
-
-```js
 return list
 |> take(prefix.length, ^)
 |> equals(^, prefix);
 ```
 
-<tr>
-<td>
-
+From [jquery/build/tasks/sourceMap.js][]:
 ```js
 var minLoc = Object.keys(
   grunt.config(
     'uglify.all.files'))[0];
-```
-From [jquery/build/tasks/sourceMap.js][].
 
-<td>
-
-```js
 var minLoc = 'uglify.all.files'
 |> grunt.config(^)
 |> Object.keys(^)[0];
 ```
 
-<tr>
-<td>
-
+From [node/deps/npm/lib/unpublish.js][]:
 ```js
 const json =
   await npmFetch.json(
     npa(pkgs[0]).escapedName,
     opts);
-```
-From [node/deps/npm/lib/unpublish.js][].
 
-<td>
-
-```js
 const json = pkgs[0]
 |> npa(^).escapedName
 |> await npmFetch.json(^, opts);
 ```
 
-<tr>
-<td>
-
+From [lodash.js][]:
 ```js
 function listCacheHas (key) {
   return assocIndexOf(this.__data__, key)
     > -1;
 }
-```
-From [lodash.js][].
-
-<td>
-
-```js
 function listCacheHas (key) {
   return this.__data__
   |> assocIndexOf(^, key)
@@ -606,68 +569,45 @@ function listCacheHas (key) {
 }
 ```
 
-<tr>
-<td>
-
+From [underscore.js][]:
 ```js
 return _.filter(obj,
   _.negate(cb(pred)),
   context);
-```
-From [underscore.js][].
 
-<td>
-
-```js
 return pred
 |> cb(^)
 |> _.negate(^)
 |> _.filter(obj, ^, context);
 ```
 
-<tr>
-<td>
-
+From [jquery/src/core/parseHTML.js][]:
 ```js
 parsed = buildFragment(
   [ data ], context, scripts);
 return jQuery.merge(
   [], parsed.childNodes);
-```
-From [jquery/src/core/parseHTML.js][].
 
-<td>
-
-```js
 return data
 |> buildFragment([^], context, scripts)
 |> ^.childNodes
 |> jQuery.merge([], ^);
 ```
 
-<tr>
-<td>
-
+From [ramda.js][].
 ```js
 return xf['@@transducer/result'](
   obj[methodName](
     bind(xf['@@transducer/step'], xf),
     acc));
-```
-From [ramda.js][].
 
-<td>
-
-```js
 return xf
 |> bind(^[@@transducer/step'], ^)
 |> obj[methodName](^, acc)
 |> xf['@@transducer/result'](^);
 ```
 
-<tr>
-<td>
-
+From [ramda.js][].
 ```js
 try {
   return tryer.apply(this, arguments);
@@ -675,12 +615,7 @@ try {
   return catcher.apply(this,
     _concat([e], arguments));
 }
-```
-From [ramda.js][].
 
-<td>
-
-```js
 try {
   return arguments
   |> tryer.apply(this, ^);
@@ -691,9 +626,7 @@ try {
 }
 ```
 
-<tr>
-<td>
-
+From [react/scripts/jest/jest-cli.js][].
 ```js
 const entries =
   Object.entries(
@@ -701,12 +634,7 @@ const entries =
     .filter(([key]) =>
       key !== 'REACT_ASYNC_MODE_TYPE');
 expectToBeUnique(entries);
-```
-From [react/scripts/jest/jest-cli.js][].
 
-<td>
-
-```js
 require('shared/ReactSymbols')
 |> Object.entries(^)
 |> ^.filter(([key]) =>
@@ -714,9 +642,7 @@ require('shared/ReactSymbols')
 |> expectToBeUnique(^);
 ```
 
-<tr>
-<td>
-
+From [express/lib/response.js][].
 ```js
 return this.set('Link',
   link
@@ -726,12 +652,7 @@ return this.set('Link',
         + rel + '"';
     })
     .join(', '));
-```
-From [express/lib/response.js][].
 
-<td>
-
-```js
 return links
 |> Object.keys(^)
 |> ^.map(function (rel) {
@@ -742,9 +663,7 @@ return links
 |> this.set('Link', ^);
 ```
 
-<tr>
-<td>
-
+From [react/scripts/jest/jest-cli.js][].
 ```js
 console.log(
   chalk.dim(
@@ -755,12 +674,7 @@ console.log(
     }`,
     'node',
     args.join(' ')));
-```
-From [react/scripts/jest/jest-cli.js][].
 
-<td>
-
-```js
 envars
 |> Object.keys(^)
 |> ^.map(envar =>
@@ -771,21 +685,14 @@ envars
 |> console.log(^);
 ```
 
-<tr>
-<td>
-
+From [jquery/src/core/init.js][].
 ```js
 if (isFunction(this[match])) {
   this[match](context[match]);
 } else
   this.attr(match, context[match]);
 }
-```
-From [jquery/src/core/init.js][].
 
-<td>
-
-```js
 match
 |> context[^]
 |> (isFunction(this[match])
@@ -793,27 +700,18 @@ match
   : this.attr(match, ^));
 ```
 
-<tr>
-<td>
-
+From [underscore.js][].
 ```js
 var result = srcFn.apply(self, args);
 if (_.isObject(result)) return result;
 return self;
-```
-From [underscore.js][].
 
-<td>
-
-```js
 return self
 |> srcFn.apply(^, args)
 |> (_.isObject(^) ? ^ : self);
 ```
 
-<tr>
-<td>
-
+From [ramda.js][].
 ```js
 return _reduce(
   xf(
@@ -821,12 +719,7 @@ return _reduce(
     ? _xwrap(fn)
     : fn),
   acc, list);
-```
-From [ramda.js][].
 
-<td>
-
-```js
 return fn
 |> (typeof ^ === 'function'
   ? _xwrap(^)
@@ -835,20 +728,13 @@ return fn
 |> _reduce(^, acc, list);
 ```
 
-<tr>
-<td>
-
+From [underscore.js][].
 ```js
 if (obj == null) return 0;
 return isArrayLike(obj)
   ? obj.length
   : _.keys(obj).length;
-```
-From [underscore.js][].
 
-<td>
-
-```js
 return obj
 |> (^ == null
   ? 0
@@ -857,9 +743,7 @@ return obj
   : _.keys(^).length);
 ```
 
-<tr>
-<td>
-
+From [jquery/src/core/init.js][].
 ```js
 jQuery.merge(
   this, jQuery.parseHTML(
@@ -868,12 +752,7 @@ jQuery.merge(
       ? context.ownerDocument || context
       : document,
     true));
-```
-From [jquery/src/core/init.js][].
 
-<td>
-
-```js
 context
 |> (^ && ^.nodeType
   ? ^.ownerDocument || ^
@@ -882,9 +761,7 @@ context
 |> jQuery.merge(^);
 ```
 
-<tr>
-<td>
-
+From [jquery/src/core/init.js][].
 ```js
 // Handle $(expr, $(...))
 if (!context || context.jquery)
@@ -893,12 +770,7 @@ if (!context || context.jquery)
 else
   return this.constructor(context)
     .find(selector);
-```
-From [jquery/src/core/init.js][].
 
-<td>
-
-```js
 return context
 |> (!^ || ^.jquery
   // Handle $(expr, $(...))
@@ -907,8 +779,6 @@ return context
   : this.constructor(^))
 |> ^.find(selector);
 ```
-
-</table>
 
 [ramda.js]: https://github.com/ramda/ramda/blob/v0.27.1/dist/ramda.js
 [node/deps/npm/lib/unpublish.js]: https://github.com/nodejs/node/blob/v16.x/deps/npm/lib/unpublish.js

@@ -521,86 +521,70 @@ essentially passing through the topic value without modifying it.
 This is especially useful for quick debugging: `value |> (console.log(^), ^)`.
 
 ## Real-world examples
+The only changes to the original examples were dedentation and removal of comments.
 
 From [ramda.js][]:
 ```js
-return equals(
-  take(prefix.length, list),
-  prefix);
+// Status quo
+return equals(take(prefix.length, list), prefix);
 
-return list
-|> take(prefix.length, ^)
-|> equals(^, prefix);
+// With pipes
+return take(prefix.length, list) |> equals(^, prefix);
 ```
 
 From [jquery/build/tasks/sourceMap.js][]:
 ```js
-var minLoc = Object.keys(
-  grunt.config(
-    'uglify.all.files'))[0];
+// Status quo
+var minLoc = Object.keys( grunt.config( "uglify.all.files" ) )[ 0 ];
 
-var minLoc = 'uglify.all.files'
-|> grunt.config(^)
-|> Object.keys(^)[0];
+// With pipes
+var minLoc = grunt.config('uglify.all.files') |> Object.keys(^)[0];
 ```
 
 From [node/deps/npm/lib/unpublish.js][]:
 ```js
-const json =
-  await npmFetch.json(
-    npa(pkgs[0]).escapedName,
-    opts);
+// Status quo
+const json = await npmFetch.json(npa(pkgs[0]).escapedName, opts);
 
-const json = pkgs[0]
-|> npa(^).escapedName
-|> await npmFetch.json(^, opts);
+// With pipes
+const json = pkgs[0] |> npa(^).escapedName |> await npmFetch.json(^, opts);
 ```
 
 From [lodash.js][]:
 ```js
-function listCacheHas (key) {
-  return assocIndexOf(this.__data__, key)
-    > -1;
-}
-function listCacheHas (key) {
-  return this.__data__
-  |> assocIndexOf(^, key)
-  |> ^ > -1;
-}
+// Status quo
+return assocIndexOf(this.__data__, key) > -1;
+
+// With pipes
+return this.__data__ |> assocIndexOf(^, key) > -1;
 ```
 
 From [underscore.js][]:
 ```js
-return _.filter(obj,
-  _.negate(cb(pred)),
-  context);
+// Status quo
+return filter(obj, negate(cb(predicate)), context);
 
-return pred
-|> cb(^)
-|> _.negate(^)
-|> _.filter(obj, ^, context);
+// With pipes
+return cb(pred) |> _.negate(^) |> _.filter(obj, ^, context);
 ```
 
 From [jquery/src/core/parseHTML.js][]:
 ```js
-parsed = buildFragment(
-  [ data ], context, scripts);
-return jQuery.merge(
-  [], parsed.childNodes);
+// Status quo
+parsed = buildFragment( [ data ], context, scripts );
+return jQuery.merge( [], parsed.childNodes );
 
-return data
-|> buildFragment([^], context, scripts)
-|> ^.childNodes
-|> jQuery.merge([], ^);
+// With pipes
+parsed = buildFragment([^], context, scripts);
+return parsed.childNodes |> jQuery.merge([], ^);
 ```
 
 From [ramda.js][].
 ```js
-return xf['@@transducer/result'](
-  obj[methodName](
-    bind(xf['@@transducer/step'], xf),
-    acc));
+// Status quo
+return xf['@@transducer/result'](obj[methodName](bind(xf['@@transducer/step'], xf), acc));
 
+// With pipes
 return xf
 |> bind(^[@@transducer/step'], ^)
 |> obj[methodName](^, acc)
@@ -609,55 +593,51 @@ return xf
 
 From [ramda.js][].
 ```js
+// Status quo
 try {
   return tryer.apply(this, arguments);
 } catch (e) {
-  return catcher.apply(this,
-    _concat([e], arguments));
+  return catcher.apply(this, _concat([e], arguments));
 }
 
+// With pipes
 try {
-  return arguments
-  |> tryer.apply(this, ^);
+  return arguments |> tryer.apply(this, ^);
 } catch (e) {
-  return arguments
-  |> _concat([e], ^)
-  |> catcher.apply(this, ^);
+  return arguments |> _concat([e], ^) |> catcher.apply(this, ^);
 }
 ```
 
 From [react/packages/shared/__tests__/ReactSymbols-test.internal.js][].
 ```js
-const entries =
-  Object.entries(
-    require('shared/ReactSymbols'))
-    .filter(([key]) =>
-      key !== 'REACT_ASYNC_MODE_TYPE');
-expectToBeUnique(entries);
+// Status quo
+const entries = Object.entries(require('shared/ReactSymbols')).filter(
+  // REACT_ASYNC_MODE_TYPE and REACT_CONCURRENT_MODE_TYPE have the same numeric value
+  // for legacy backwards compatibility
+  ([key]) => key !== 'REACT_ASYNC_MODE_TYPE',
+);
 
-require('shared/ReactSymbols')
+// With pipes
+const entries = require('shared/ReactSymbols')
 |> Object.entries(^)
 |> ^.filter(([key]) =>
-  key !== 'REACT_ASYNC_MODE_TYPE')
-|> expectToBeUnique(^);
+  // REACT_ASYNC_MODE_TYPE and REACT_CONCURRENT_MODE_TYPE have the same numeric value
+  // for legacy backwards compatibility
+  key !== 'REACT_ASYNC_MODE_TYPE',
+);
 ```
 
 From [express/lib/response.js][].
 ```js
-return this.set('Link',
-  link
-  + Object.keys(links)
-    .map(function (rel) {
-      return '<' + links[rel] + '>; rel="'
-        + rel + '"';
-    })
-    .join(', '));
+// Status quo
+return this.set('Link', link + Object.keys(links).map(function(rel){
+  return '<' + links[rel] + '>; rel="' + rel + '"';
+}).join(', '));
 
+// With pipes
 return links
-|> Object.keys(^)
-|> ^.map(function (rel) {
-  return '<' + links[rel] + '>; rel="'
-    + rel + '"';
+|> Object.keys(^).map(function (rel) {
+  return '<' + links[rel] + '>; rel="' + rel + '"';
 })
 |> link + ^.join(', ')
 |> this.set('Link', ^);
@@ -665,20 +645,21 @@ return links
 
 From [react/scripts/jest/jest-cli.js][].
 ```js
+// Status quo
 console.log(
   chalk.dim(
     `$ ${Object.keys(envars)
-      .map(envar =>
-        `${envar}=${envars[envar]}`)
-      .join(' ')
-    }`,
+      .map(envar => `${envar}=${envars[envar]}`)
+      .join(' ')}`,
     'node',
-    args.join(' ')));
+    args.join(' ')
+  )
+);
 
+// With pipes
 envars
 |> Object.keys(^)
-|> ^.map(envar =>
-  `${envar}=${envars[envar]}`)
+|> ^.map(envar => `${envar}=${envars[envar]}`)
 |> ^.join(' ')
 |> `$ ${^}`
 |> chalk.dim(^, 'node', args.join(' '))
@@ -687,54 +668,53 @@ envars
 
 From [jquery/src/core/init.js][].
 ```js
-if (isFunction(this[match])) {
-  this[match](context[match]);
-} else
-  this.attr(match, context[match]);
+// Status quo
+if ( jQuery.isFunction( this[ match ] ) ) {
+  this[ match ]( context[ match ] );
+} else {
+  this.attr( match, context[ match ] );
 }
 
+// With pipes
 match
 |> context[^]
 |> (isFunction(this[match])
-  ? this[match](^);
+  ? this[match](^)
   : this.attr(match, ^));
 ```
 
 From [underscore.js][].
 ```js
-var result = srcFn.apply(self, args);
-if (_.isObject(result)) return result;
+// Status quo
+var result = sourceFunc.apply(self, args);
+if (isObject(result)) return result;
 return self;
 
+// With pipes
 return self
-|> srcFn.apply(^, args)
+|> sourceFunc.apply(^, args)
 |> (_.isObject(^) ? ^ : self);
 ```
 
 From [ramda.js][].
 ```js
-return _reduce(
-  xf(
-    typeof fn === 'function'
-    ? _xwrap(fn)
-    : fn),
-  acc, list);
+// Status quo
+return _reduce(xf(typeof fn === 'function' ? _xwrap(fn) : fn), acc, list);
 
+// With pipes
 return fn
-|> (typeof ^ === 'function'
-  ? _xwrap(^)
-  : ^)
+|> (typeof ^ === 'function' ? _xwrap(^) : ^)
 |> xf(^)
 |> _reduce(^, acc, list);
 ```
 
 From [underscore.js][].
 ```js
+// Status quo
 if (obj == null) return 0;
-return isArrayLike(obj)
-  ? obj.length
-  : _.keys(obj).length;
+return isArrayLike(obj) ? obj.length : keys(obj).length;
 
+// With pipes
 return obj
 |> (^ == null
   ? 0
@@ -745,37 +725,39 @@ return obj
 
 From [jquery/src/core/init.js][].
 ```js
-jQuery.merge(
-  this, jQuery.parseHTML(
-    match[1],
-    context && context.nodeType
-      ? context.ownerDocument || context
-      : document,
-    true));
+// Status quo
+jQuery.merge( this, jQuery.parseHTML(
+  match[ 1 ],
+  context && context.nodeType ? context.ownerDocument || context : document,
+  true
+) );
 
+// With pipes
 context
-|> (^ && ^.nodeType
-  ? ^.ownerDocument || ^
-  : document)
+|> (^ && ^.nodeType ? ^.ownerDocument || ^ : document)
 |> jQuery.parseHTML(match[1], ^, true)
 |> jQuery.merge(^);
 ```
 
 From [jquery/src/core/init.js][].
 ```js
-// Handle $(expr, $(...))
-if (!context || context.jquery)
-  return (context || root).find(selector);
-// Handle $(expr, context)
-else
-  return this.constructor(context)
-    .find(selector);
+// Status quo
+// HANDLE: $(expr, $(...))
+else if ( !context || context.jquery ) {
+  return ( context || root ).find( selector );
+// HANDLE: $(expr, context)
+// (which is just equivalent to: $(context).find(expr)
+} else {
+  return this.constructor( context ).find( selector );
+}
 
+// With pipes
 return context
 |> (!^ || ^.jquery
-  // Handle $(expr, $(...))
+  // HANDLE: $(expr, $(...))
   ? ^ || root
-  // Handle $(expr, context)
+  // HANDLE: $(expr, context)
+  // (which is just equivalent to: $(context).find(expr)
   : this.constructor(^))
 |> ^.find(selector);
 ```

@@ -460,7 +460,7 @@ and [**Clojure**’s `#(^)` **function literals**][Clojure function literals].)
 
 </details>
 
-The **pipe operator** `|>` is a **right-associative infix operator**
+The **pipe operator** `|>` is an **infix operator**
 that forms a **pipe expression** (also called a **pipeline**).
 It evaluates its lefthand side (the **pipe head** or **pipe input**),
 immutably **binds** the resulting value (the **topic value**) to the **topic reference**,

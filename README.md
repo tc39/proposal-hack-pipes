@@ -547,7 +547,7 @@ From [underscore.js][]:
 return filter(obj, negate(cb(predicate)), context);
 
 // With pipes
-return cb(pred) |> _.negate(^) |> _.filter(obj, ^, context);
+return cb(predicate) |> _.negate(^) |> _.filter(obj, ^, context);
 ```
 
 From [ramda.js][].

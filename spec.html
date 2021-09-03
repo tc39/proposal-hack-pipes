@@ -584,7 +584,7 @@ contributors: J. S. Choi
         `?` `:`
         <ins>`|&gt;`</ins>
         `=` `+=` `-=` `*=` `%=` `**=`
-        `&lt;&lt;=` `&gt;&gt;=` `&gt;&gt;&gt;=` `&amp;=` `|=` `^=`
+        `&lt;&lt;=` `&gt;&gt;=` `&gt;&gt;&gt;=` `&amp;=` `|=` <del>`^=`</del>
         `&amp;&amp;=` `||=` `??=`
         `=&gt;`
     </emu-grammar>
@@ -805,6 +805,22 @@ contributors: J. S. Choi
         AsyncArrowFunction[?In, ?Yield, ?Await]
         LeftHandSideExpression[?Yield, ?Await] `=` AssignmentExpression[?In, ?Yield, ?Await]
         LeftHandSideExpression[?Yield, ?Await] AssignmentOperator AssignmentExpression[?In, ?Yield, ?Await]
+
+      <del>AssignmentOperator : one of
+        `*=` `/=` `%=` `+=` `-=` `&lt;&lt;=` `&gt;&gt;=` `&gt;&gt;&gt;=` `&amp;=` `^=` `|=` `**=`</del>
+      <ins>AssignmentOperator :
+        `*=`
+        `/=`
+        `%=`
+        `+=`
+        `-=`
+        `&lt;&lt;=`
+        `&gt;&gt;=`
+        `&gt;&gt;&gt;=`
+        `&amp;=`
+        `^` [contiguous] `=`
+        `|=`
+        `**=`</ins>
     </emu-grammar>
 
   </emu-clause>

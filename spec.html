@@ -23,6 +23,45 @@ contributors: J. S. Choi
   `&hat;` could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
 </emu-intro>
 
+<emu-clause id="sec-notational-conventions">
+  <h1>Notational Conventions</h1>
+
+  <emu-clause id="sec-syntactic-and-lexical-grammars">
+    <h1>Syntactic and Lexical Grammars</h1>
+
+    <emu-clause id="sec-grammar-notation" namespace="grammar-notation">
+      <h1>Grammar Notation</h1>
+
+      <emu-note type=editor>
+        <p>This section augments the <a
+        href=https://tc39.es/ecma262/#sec-grammar-notation>original
+        Grammar Notation clause</a>.</p>
+
+        <p>It presumptively uses `&hat;` as the placeholder token for the
+        topic reference. This choice of token is not a final decision; `&hat;`
+        could instead be `#`, `@`, `&quest;`, or many other tokens.</p>
+      </emu-note>
+
+      <p>If the phrase &ldquo;[no |LineTerminator| here]&rdquo; appears in the right-hand side of a production of the syntactic grammar, it indicates that the production is <em>a restricted production</em>: it may not be used if a |LineTerminator| occurs in the input stream at the indicated position. For example, the production:</p>
+      <emu-grammar type="definition" example>
+        ThrowStatement :
+          `throw` [no LineTerminator here] Expression `;`
+      </emu-grammar>
+      <p>indicates that the production may not be used if a |LineTerminator| occurs in the script between the `throw` token and the |Expression|.</p>
+      <ins class="block">
+      <p>If the phrase &ldquo;[no |LineTerminator| here]&rdquo; appears in the right-hand side of a production of the syntactic grammar, it indicates that the production is <em>a restricted production</em>: it may not be used if a |LineTerminator| occurs in the input stream at the indicated position. For example, the production:</p>
+      <p>If the phrase “[contiguous]” appears in the right-hand side of a production of the syntactic grammar, it indicates that the production may not be used if there are any discarded tokens (i.e., simple white space, single-line comments, and any |MultiLineComment| that contains no line terminator) at the indicated position.</p>
+      <p>In other words, a production with “[contiguous]” may be used only if the production immediately preceding the indicated position is, in the original source text, contiguous with the production immediately following the indicated position. For example, the production:</p>
+      <emu-grammar type="definition" example>
+        AssignmentOperator :
+          `^` [contiguous] `=`
+      </emu-grammar>
+      <p>indicates that the production must be associated with the text `^=`. The production may not be used if any code points appear in the script between `^` and `=`, including code points associated with discarded tokens such as |WhiteSpace|, |LineTerminator|, |SingleLineComment|, or |MultiLineComment|.</p>
+      </ins>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>
+
 <emu-clause id="sec-syntax-directed-operations">
   <h1>Syntax-Directed Operations</h1>
 

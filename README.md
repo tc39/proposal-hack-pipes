@@ -2,7 +2,7 @@
 ECMAScript Proposal. J. S. Choi, 2021.
 
 <details>
-<summary>This document has <strong>moved</strong> to <a href="https://github.com/js-choi/proposal-hack-pipes">tc39/proposal-pipeline-operator</a>,
+<summary>This document has <strong>moved</strong> to <a href="https://github.com/tc39/proposal-pipeline-operator">tc39/proposal-pipeline-operator</a>,
 after advancing to
 <a href="https://tc39.es/process-document/">TC39 Stage 2</a>.<br>
 The remainder of this document is out of date and for archival purposes only.</summary>
